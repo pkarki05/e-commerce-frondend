@@ -1,6 +1,11 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
+import compareImage from '../images/compare.svg'
+import useImage from '../images/user.svg'
+import cart from '../images/cart.svg'
+import menu from '../images/menu.svg'
+
 
 
 const Header = () => {
@@ -8,14 +13,7 @@ const Header = () => {
     <>
 <header className="header-top-strip">
   <div className="container-xxl">
-    <div className="row">
-      <div className=" col-6">
-        <p className='text-white mb-0'>Free Shipping available</p>
-      </div>
-      <div className=" col-6">
-        <p className='text-white text-end mb-0'>Our Hotline Number: <a href="tel:+91 415690123" className='text-white'>+61 415690123</a></p>
-      </div>
-    </div>
+    
   </div>
 </header>
 <header className="header-upper py-3">
@@ -38,26 +36,12 @@ const Header = () => {
 </div>
         </div>
         <div className="col-5">
-          <div className="header-uopeer-links d-flex align-item-center justify-content-between">
-<div>
-  <Link className='d-flex align-items-center gap-10 text-white'>
-<img src="images/compare.svg" alt="compare" />
-<p className='mb-0'>
-  Compare <br /> Products
-</p>
-</Link>
-</div>
-<div>
-<Link className='d-flex align-items-center gap-10 text-white' to='/wishlist'>
-<img src="images/wishlist.svg" alt="wishlist" />
-<p className='mb-0'>
-  Favourite <br /> Wish List
-</p>
-</Link>
-</div>
+          <div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
+
+
 <div>
 <Link className='d-flex align-items-center gap-10 text-white' to='/login'>
-<img src="images/user.svg" alt="user" />
+<img src={useImage} alt="user" />
 <p className='mb-0'>
   Log in <br /> My Account
 </p>
@@ -65,7 +49,7 @@ const Header = () => {
 </div>
 <div>
 <Link to='/cart' className="d-flex align-items-center gap-10 text-white">
-<img src="images/cart.svg" alt="cart" />
+<img src={cart} alt="cart" />
 <div className="d-flex flex-column gap-10">
 <span className="badge bg-white text-dark">0</span>
 <p className='mb-0'>$ 99</p>
@@ -89,7 +73,7 @@ const Header = () => {
    type="button" id="dropdownMenuButton1" 
    data-bs-toggle="dropdown" 
    aria-expanded="false">
-  <img src="images/menu.svg" alt="" />
+  <img src={menu}alt="" />
    <span className='me-3 d-inline-block'> Shop Categories</span> 
   </button>
   <ul className="dropdown-menu text-white" aria-labelledby="dropdownMenuButton1">

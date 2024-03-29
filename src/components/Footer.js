@@ -7,6 +7,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { SiPinterest } from "react-icons/si";
 import { FaYoutube } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
+import newsLetter from '../images/newsletter.png'
 
 
 
@@ -18,7 +19,7 @@ const Footer = () => {
           <div className="row align-items-center">
             <div className="col-5 ">
               <div className="footer-top-data d-flex gap-30 align-items-center">
-                <img src="images/newsletter.png" alt="" />
+                <img src={newsLetter} alt="" />
                 <h3 className='text-white'>Sign Up for Newsletter</h3>
               </div>
 

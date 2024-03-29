@@ -3,6 +3,8 @@ import MetaHelmentComp from '../components/MetaHelmentComp'
 import BreadCrum from '../components/BreadCrum'
 import { MdDeleteForever, MdOutlineDeleteForever } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import Awatch from '../images/a_watch.jpg'
+
 
 
 const Cart = () => {
@@ -24,7 +26,7 @@ const Cart = () => {
                         
                         <div className='cart-col-1 d-flex align-items-center gap-15'>
                             <div className='w-25'>
-                                <img src='/images/a_watch.jpg' className='img-fluid'  alt="image" />
+                                <img src={Awatch} className='img-fluid'  alt="image" />
                             </div>
                             <div className='w-75'>
                                 <p>xdfghjnn</p>

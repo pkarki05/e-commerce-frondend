@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Awatch from '../images/a_watch.jpg'
+
 
 const Checkout = () => {
   return (
@@ -77,7 +79,7 @@ const Checkout = () => {
                             <div className="w-75 d-flex  gap-10">
                             <div className='w-25 position-relative'>
                                 <span style={{top:'-20px', right:'-10px'}} className='p-2 badge bg-secondary text-white rounded-circle  position-absolute '>1</span>
-                            <img src="/images/a_watch.jpg" className='img-fluid' alt="" />
+                            <img src={Awatch} className='img-fluid' alt="" />
                         </div>
                         <div className='title'>
                                 <h5 className='total-price'>description</h5>
