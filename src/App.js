@@ -15,6 +15,8 @@ import ShippingPolicy from './pages/ShippingPolicy';
 import SingleProduct from './pages/SingleProduct';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -42,8 +44,10 @@ function App() {
 
     </Routes>
     </BrowserRouter>
-
+    <ToastContainer/>
     </>
+      
+
   );
 }
 

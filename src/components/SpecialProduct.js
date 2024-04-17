@@ -3,18 +3,18 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from 'react-router-dom';
 import watch from '../images/watch.jpg'
 
-const SpecialProduct = () => {
+const SpecialProduct = ({productImage,title,price, salesPrice,days, hours, minutes, seconds, quantity, progressValue}) => {
   return (
     <div className='col-4'>
         <div className="special-product-card">
             <div className="d-flex justify-content-between">
                 <div>
-                    <img src={watch} className='img-fluid' alt="" />
+                    <img src={productImage} className='img-fluid' alt="" width='200px'  />
                 </div>
                 <div className="special-product-content">
                 <h6 className="brand">Havels</h6>
                 <h5 className='title'>
-                    Kids headPhones bulk 10 pack multi colored for students
+                   {title}
                 </h5>
                 <ReactStars
                     count={5}
@@ -22,31 +22,33 @@ const SpecialProduct = () => {
                     edit={false}
                     value={3}
                     activeColor="#ffd700"
+                    
   />
-                
-                <p className="price">
-                    <span className='red p'> $99.00</span>
-                     &nbsp;<strike>$149</strike>
+                    <div className='mt-3'>
+                    <p className="price">
+                    <span className='text-danger text-bold'> ${salesPrice}</span>
+                     &nbsp;<strike>${price}</strike>
                     </p>
+
+                    </div>
+                
+                
                     <div className="discount-till d-flex align-items-center gap-10">
-                        <p className='mb-0'>
-                            <b>5</b> days
+                    <p>Offer Ends In: <b className='text-danger'>{days}</b> days
+</p>
+
+                        <p className='mb-0 text-danger'>
                         </p>
 
-                        <div className="d-flex gap-10 align-items-center">
-                            <span className='badge rounded-circle p-2 bg-danger'>11</span>
-                            <span className='badge rounded-circle p-2 bg-danger'>6</span>
-                            <span className='badge rounded-circle p-2 bg-danger'>55</span>
-
-                        </div>
+                       
                        
                     </div>
                     <div className="prod-count my-3">
-                            <p>Products: 5</p>
+                            <p>Stock Available: {quantity}</p>
                             <div className="progress">
                         <div className="progress-bar" 
-                        role="progressbar" style={{width:'50%'}}
-                        aria-valuenow="25" aria-valuemin="0" 
+                        role="progressbar" style={{width:`${progressValue}%`}}
+                        aria-valuenow={progressValue} aria-valuemin="0" 
                         aria-valuemax="100"></div>
                         </div>
 

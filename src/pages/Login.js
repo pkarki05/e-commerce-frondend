@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MetaHelmentComp from '../components/MetaHelmentComp'
 import BreadCrum from '../components/BreadCrum'
 import { Link } from 'react-router-dom'
+import { Form } from 'react-bootstrap'
+import CustomInput from '../components/CustomInput'
+import { loginUser } from './auth/UserAction'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const [form, setForm] = useState({});
+    const navigate=useNavigate();
+
+    const inputFields = [
+        {
+          name: "email",
+          type: "email",
+          placeholder: "Email",
+        },
+        {
+
+            name: "password",
+          type: "password",
+          placeholder: "Password",
+        },
+      ];
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+      };
+
+      const handleOnSubmit = async(e) => {
+        e.preventDefault();
+       await loginUser(form)
+       navigate('/cart')
+
+
+      };
   return (
     <>
      <MetaHelmentComp title={'Login'}/>
@@ -13,13 +45,14 @@ const Login = () => {
             <div className="col-12">
                 <div className="auth-card">
                     <h3 className='text-center mb-3'>Login</h3>
-                    <form action="" className='d-flex flex-column gap-15'>
+                    <Form onSubmit={handleOnSubmit} action="" className='d-flex flex-column gap-15'>
                         <div>
-                            <input type="email" name='email' placeholder='Email' className='form-control w-100'/>
+                            {inputFields.map((items)=>(
+                                <CustomInput {...items} onChange={handleChange} key={items.name}/>
+                            ))}
                         </div>
-                        <div>
-                            <input type="password" name='password' placeholder='Password' className='form-control w-100'/>
-                        </div>
+                       
+                       
                         <div className='mt-1'>
                             <Link to='/forgot-password'  >Forgot Password?</Link>
                             <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
@@ -27,7 +60,7 @@ const Login = () => {
                                 <Link className='button signup ' to='/signup'>SignUp</Link>
                             </div>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             </div>
         </div>

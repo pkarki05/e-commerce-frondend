@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Marquee from "react-fast-marquee";
 import BlogCart from '../components/BlogCart';
@@ -28,11 +28,94 @@ import brand04 from '../images/brand-04.png'
 import brand05 from '../images/brand-05.png'
 import brand06 from '../images/brand-06.png'
 import brand07 from '../images/brand-07.png'
+import { ProductInfo, SpecialProductInfo } from '../firrebase/ProductAction';
+import { CategoryInfo } from '../firrebase/ProductAction';
+import CategoryCard from '../components/CategoryCard';
 
 
 
 
-const Home = () => {
+const Home = (props) => {
+  const [data, setData] = useState([]);
+  const [category, setCategory]=useState([])
+  const [specialProduct, setSpecialProducts]=useState([])
+  const [popularProduct, setPopularProduct]=useState([])
+  const [productsWithDuration, setProductsWithDuration] = useState([]);
+
+  
+  useEffect(() => {
+    // Call ProductInfo function when component mounts
+    const fetchData = async () => {
+      const productData = await ProductInfo('slug'); // Pass the uid or any other necessary parameter
+      const categoryData=await CategoryInfo('slug')
+    
+      setCategory(categoryData || [])
+      setData(productData || []); // Ensure data is initialized as an empty array if productData is null
+      console.log(productData)
+    };
+    fetchData();
+  }, []);
+   // Run once when component mounts
+
+   useEffect(() => {
+    const fetchSpecialProducts = async () => {
+      try {
+        const products = await ProductInfo();
+        // Filter products that have salesPrice, salesStartAt, and salesEndAt
+        const filteredProducts = products.filter(
+          (product) =>
+            product.salesPrice && product.salesStartAt && product.salesEndAt
+        );
+        setSpecialProducts(filteredProducts);
+      } catch (error) {
+        console.error('Error fetching special products: ', error);
+      }
+    };
+
+    fetchSpecialProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchPopularProducts = async () => {
+      try {
+        const products = await ProductInfo();
+        // Filter products that have salesPrice, salesStartAt, and salesEndAt
+        const filteredProducts = products.filter(
+          (product) =>
+            product.price <=1000
+        );
+        setPopularProduct(filteredProducts);
+      } catch (error) {
+        console.error('Error fetching special products: ', error);
+      }
+    };
+
+    fetchPopularProducts();
+  }, []);
+
+  useEffect(() => {
+    // Calculate duration for each product and update the state
+    const productsWithDuration = specialProduct.map((product) => {
+      const startDate = new Date(product.salesStartAt);
+      const endDate = new Date(product.salesEndAt);
+
+      // Calculate difference in milliseconds
+      const durationMs = endDate.getTime() - startDate.getTime();
+
+      // Convert milliseconds to days
+      const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+
+      // Return product object with duration
+      return {
+        ...product,
+        durationDays: durationDays
+      };
+    });
+
+    setProductsWithDuration(productsWithDuration);
+  }, [specialProduct]); // Trigger effect when specialProduct changes
+
+
   return (
     <>
       <section className="home-wrapper-1 py-5">
@@ -164,80 +247,41 @@ const Home = () => {
           <div className="row">
             <div className="col-12">
               <div className="categories d-flex justify-content-between align-items-center flex-wrap">
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Cameras</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={camera} alt="camera" />
-                </div>
-                <div className='d-flex align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Smart TV</h6>
-                    <p> 22 Items</p>
-                  </div>
-                  <img src={tv} alt="camera" />
-                </div>
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Smart Watches</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={headPhone} alt="camera" />
-                </div>
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Music & Gaming</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={headPhone} alt="camera" />
-                </div>
-               
-                <div className='d-flex align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Cameras</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={camera} alt="camera" />
-                </div>
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Smart TV</h6>
-                    <p> 22 Items</p>
-                  </div>
-                  <img src={tv} alt="camera" />
-                </div>
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Smart Watches</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={headPhone} alt="camera" />
-                </div>
-                <div className='d-flex  align-items-center'>
-                  <div className='mx-3'>
-                    <h6>Music & Gaming</h6>
-                    <p> 10 Items</p>
-                  </div>
-                  <img src={headPhone} alt="camera" />
-                </div>
-               
+                {category.map((category)=>(
+                   <CategoryCard key={category.slug}
+                    name={category.name} 
+                    thumbnail={category.thumbnail}/>
 
+
+                ))}
+
+                
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section className="featured-wrapper py-5 home-wrapper-2">
+      <section className="featured-wrapper py-5 home-wrapper-2 ">
         <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
+          <div className="row ">
+            <div className="col-12 ">
               <h3 className="section-heading">Featured Collections</h3>
             </div>
-         <ProductCard/>   
-         <ProductCard/>   
-         <ProductCard/>   
-         <ProductCard/>   
+            {data.map((product) => (
+              <ProductCard
+              key={product.slug}
+                productTitle={product.title}
+                price={product.price}
+                productImg1={product.thumbnail}
+                productImg2={product.imageUrls[1]}
+              />
+            ))}
+
+
+    
+           
+         
+        
           </div>
         </div>
       </section>
@@ -308,9 +352,18 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <SpecialProduct/>
-            <SpecialProduct/>
-            <SpecialProduct/>
+            {productsWithDuration.map((product)=>(
+              <SpecialProduct title={product.title}
+              productImage={product.thumbnail}
+              price={product.price}
+              salesPrice={product.salesPrice}
+              days={product.durationDays}
+              quantity={product.quantity}
+              progressValue={product.quantity}/>
+
+
+            ))}
+           
           </div>
         </div>
       </section>
@@ -320,10 +373,15 @@ const Home = () => {
             <div className="col-12">
               <h3 className="section-heading">Our Popular Products</h3>
             </div>
-         <ProductCard/>   
-         <ProductCard/>   
-         <ProductCard/>   
-         <ProductCard/>   
+            {popularProduct.map((product) => (
+              <ProductCard
+              key={product.slug}
+                productTitle={product.title}
+                price={product.price}
+                productImg1={product.thumbnail}
+                productImg2={product.imageUrls[1]}
+              />
+            ))}         
           </div>
         </div>
       </section>
@@ -366,19 +424,7 @@ const Home = () => {
 
       </section>
      
-      <section className="blog-wrapper py-5 home-wrapper-2">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
-              <h3 className="section-heading">Our Latest News</h3>
-            </div>
-         <BlogCart/>   
-         <BlogCart/>   
-         <BlogCart/>   
-         <BlogCart/>   
-          </div>
-        </div>
-      </section>
+      
 
     </>
   )
