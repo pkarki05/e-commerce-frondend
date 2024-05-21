@@ -1,8 +1,9 @@
 .heart-unfill{
-    font-size: 24px;
+    font-size: 26px;
+    color: black;
+
 
 }
 .heart-fill{
-    font-size: 24px;
-    color: black;
+    font-size: 26px;
 }

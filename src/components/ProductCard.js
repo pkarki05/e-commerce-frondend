@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import watch from '../images/watch.jpg'
@@ -11,17 +11,33 @@ import { ProductInfo } from '../redux/Product/ProductAction';
 import './productcart.css'
 import { CiHeart } from "react-icons/ci";
 import { FcLike } from "react-icons/fc";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../redux/Cart/CartSlice';
 
 
 const ProductCard = (props) => {
     const { grid, brand, productTitle, price, description, productImg1, productImg2, slug } = props;
     const location=useLocation()
-    
+    const cartItems=useSelector(state=>state.cart.cartItems)
+    const [form, setForm] = useState({});
     const [isLiked, setIsLiked] = useState(false);
+    const { productList } = useSelector(state => state.product);
+    const dispatch=useDispatch()
+   
+
+    useEffect(() => {
+        const productInfo = productList.find((product) => product.slug === slug);
+        setForm(productInfo);
+    }, [slug, productList]);
 
     const handleWishlistClick = () => {
         setIsLiked(!isLiked);
     };
+    const handleClick=(product)=>{
+        dispatch(addToCart({...product}));
+
+
+    }
     
     
    
@@ -34,7 +50,7 @@ const ProductCard = (props) => {
             <div className="wishlist-icon position-absolute"onClick={handleWishlistClick} >
                 <Link>
                 <div className='love-icon'>
-                {isLiked ? <FcLike className='heart-unfill' /> : <CiHeart className='heart-fill' />}
+                {isLiked ? <FcLike className='heart-fill' /> : <CiHeart className='heart-unfill' />}
 
 
                 </div>
@@ -67,12 +83,12 @@ const ProductCard = (props) => {
                 
                 <p className="price text-dark">${price}</p>
             </div>
-            <div className="action-bar position-absolute">
+            <div className="action-bar position-absolute" onClick={()=>handleClick(form)} >
                 <div className="d-flex flex-column">
                     
-                    <Link>
+                    <button className='border-0 bg-white'>
                     <img src={addCart} alt="" />
-                    </Link>
+                    </button>
                 </div>
 
             </div>

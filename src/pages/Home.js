@@ -164,7 +164,7 @@ const Home = (props) => {
                   <h4>SUPERCHARGED FOR PRO</h4>
                   <h3>iPad S13+ Pro </h3>
                   <p>From $999 or $44.99/month</p>
-                  <Link className='button'>BY NOW</Link>
+                  
                 </div>
 
               </div>
