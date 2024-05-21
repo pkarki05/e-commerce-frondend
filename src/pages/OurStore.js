@@ -4,7 +4,7 @@ import MetaHelmentComp from '../components/MetaHelmentComp'
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { TbListDetails } from "react-icons/tb";
 import ProductCard from '../components/ProductCard'
-import { CategoryInfo, ProductInfo } from '../firrebase/ProductAction';
+import { CategoryInfo, ProductInfo } from '../redux/Product/ProductAction';
 
 const OurStore = ({title}) => {
     const [sortingOption, setSortingOption] = useState('price-ascending');
@@ -246,7 +246,8 @@ const OurStore = ({title}) => {
                         <div className="d-flex gap-10 flex-wrap">
                         {filteredAndSortedProducts.map((product) => (
                         <ProductCard grid={grid}
-                        key={product.slug}
+                        key={product.id}
+                        slug={product.id}
                         description={product.description}
                             productTitle={product.title}
                             price={product.price}

@@ -297,7 +297,11 @@ footer .input-group-text{
   object-fit: contain;
 }
 .product-card:hover .action-bar{
-  right: 10px;
+  right: 15px;
+  top: 60px;
+}
+.product-card:hover .action-bar img{
+  width: 28px;
 }
 .product-card .product-details h6{
   color:var(---color-image-text);
@@ -667,12 +671,12 @@ review:not(:last-child){
 }
 .other-product-images{
   background-color: var(---color-white);
-  padding: 20px;
+  padding: 10px;
+
 }
 .other-product-images>div{
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  width:48% ;
+  padding: 40px;
+  
 
 
 }
@@ -783,3 +787,49 @@ review:not(:last-child){
 
 
 
+/* CSS for col-md-6 */
+.delete{
+  cursor: pointer;
+}
+.qty-count{
+  z-index: 100;
+  top: 10px;
+  right: 100px;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 400;
+  
+}
+.cart-total{
+
+  top: 50px;
+  font-size: 14px;
+  color: white;
+  font-weight: 200;
+}
+/* .search-results{
+  position: absolute;
+  top: 100%;
+  left: 13px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  max-width: 300px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+.search-results li{
+  padding: 10px;
+  cursor: pointer;
+
+}
+.search-results li:hover{
+  background-color: #f0f0f0;
+} */

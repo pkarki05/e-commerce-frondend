@@ -1,14 +1,45 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import compareImage from '../images/compare.svg'
 import useImage from '../images/user.svg'
 import cart from '../images/cart.svg'
 import menu from '../images/menu.svg'
+import { useSelector } from 'react-redux';
+import '../search.css'
+
 
 
 
 const Header = () => {
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredProducts, setFilteredProduct]=useState([])
+  const products=useSelector(state=>state.product.productList)
+  const cartItems=useSelector(state=>state.cart.cartItems)
+  const navigate=useNavigate()
+
+  const calculateTotal=()=>{
+    return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || item.cartQuantity)),0)
+}
+
+const handleSeachChange=(e)=>{
+  setSearchInput(e.target.value)
+  if(e.target.value.length>0){
+    const filtered=products.filter(product=>product.title.toLowerCase().includes(e.target.value.toLowerCase()))
+    setFilteredProduct(filtered)
+  }else{
+    setFilteredProduct([])
+  }
+}
+const handleSearchSelect=(product)=>{
+  setSearchInput('')
+  setFilteredProduct([])
+  navigate(`/product/${product.slug}`)
+}
+
+
+
+
   return (
     <>
 <header className="header-top-strip">
@@ -24,16 +55,30 @@ const Header = () => {
           <Link className='d-flex align-items-center gap-10 text-white'>Electro.</Link>
         </h2>
         </div>
-        <div className="col-5">
+        <div className="col-5 position-relative">
         <div className="input-group ">
   <input type="text" 
-  className="form-control py-2" 
+  className="search-input py-2 position-relative" 
   placeholder="Search product here..." 
-  aria-label="Search product here..." 
-  aria-describedby="basic-addon2"/>
-  <span className="input-group-text p-3" id="basic-addon2"><CiSearch className='' />
-</span>
+
+  value={searchInput}
+  onChange={handleSeachChange}/>
+ 
 </div>
+<div className='search-icon'>
+<CiSearch />
+
+</div>
+{filteredProducts.length>0 && (
+  <ul className='search-results'>
+    {filteredProducts.map(product=>(
+      <li key={product.slug} onClick={()=>handleSearchSelect(product)}>
+        {product.title}
+
+      </li>
+    ))}
+  </ul>
+)}
         </div>
         <div className="col-5">
           <div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
@@ -49,10 +94,12 @@ const Header = () => {
 </div>
 <div>
 <Link to='/cart' className="d-flex align-items-center gap-10 text-white">
-<img src={cart} alt="cart" />
 <div className="d-flex flex-column gap-10">
-<span className="badge bg-white text-dark">0</span>
-<p className='mb-0'>$ 99</p>
+
+<span className="badge bg-danger text-light rounded-circle qty-count position-absolute" >{cartItems.length}</span>
+<img src={cart} alt="cart"  className='text-light position-relative'/>
+
+<p className='mb-0 position-absolute cart-total'>${calculateTotal()} </p>
 </div>
 </Link>
 </div>

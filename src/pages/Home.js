@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Marquee from "react-fast-marquee";
 import BlogCart from '../components/BlogCart';
 import ProductCard from '../components/ProductCard';
@@ -28,9 +28,12 @@ import brand04 from '../images/brand-04.png'
 import brand05 from '../images/brand-05.png'
 import brand06 from '../images/brand-06.png'
 import brand07 from '../images/brand-07.png'
-import { ProductInfo, SpecialProductInfo } from '../firrebase/ProductAction';
-import { CategoryInfo } from '../firrebase/ProductAction';
+import { ProductInfo, SpecialProductInfo, fetchProductAction } from '../redux/Product/ProductAction';
+import { CategoryInfo } from '../redux/Product/ProductAction';
 import CategoryCard from '../components/CategoryCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategoryAction } from '../redux/Category/CategoryAction';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -40,21 +43,48 @@ const Home = (props) => {
   const [category, setCategory]=useState([])
   const [specialProduct, setSpecialProducts]=useState([])
   const [popularProduct, setPopularProduct]=useState([])
-  const [productsWithDuration, setProductsWithDuration] = useState([]);
+  const [productsWithDuration, setProductsWithDuration] = useState([]); 
+  const dispatch=useDispatch()
+  const{slug}=useParams()
+  const {productList}=useSelector(state=>state.product)
+  const {categoryList}=useSelector(state=>state.category)
+  console.log('category', categoryList)
+  console.log('product', productList)
+
+
+
+  useEffect(()=>{
+    dispatch(fetchProductAction())
+    dispatch(fetchCategoryAction())
+
+  },[dispatch])
+  
+
+  useEffect(()=>{
+    setData(productList)
+    setCategory(categoryList)
+  },[productList,categoryList,dispatch])
+  
+  const handleClick=(slug)=>{
+    <Link to={`product/${slug}`}>
+    </Link>
+
+  }
+  
 
   
-  useEffect(() => {
-    // Call ProductInfo function when component mounts
-    const fetchData = async () => {
-      const productData = await ProductInfo('slug'); // Pass the uid or any other necessary parameter
-      const categoryData=await CategoryInfo('slug')
+  // useEffect(() => {
+  //   // Call ProductInfo function when component mounts
+  //   const fetchData = async () => {
+  //     const productData = await ProductInfo('slug'); // Pass the uid or any other necessary parameter
+  //     const categoryData=await CategoryInfo('slug')
     
-      setCategory(categoryData || [])
-      setData(productData || []); // Ensure data is initialized as an empty array if productData is null
-      console.log(productData)
-    };
-    fetchData();
-  }, []);
+  //     setCategory(categoryData || [])
+  //     setData(productData || []); // Ensure data is initialized as an empty array if productData is null
+  //     console.log(productData)
+  //   };
+  //   fetchData();
+  // }, []);
    // Run once when component mounts
 
    useEffect(() => {
@@ -114,6 +144,8 @@ const Home = (props) => {
 
     setProductsWithDuration(productsWithDuration);
   }, [specialProduct]); // Trigger effect when specialProduct changes
+   
+  
 
 
   return (
@@ -247,6 +279,7 @@ const Home = (props) => {
           <div className="row">
             <div className="col-12">
               <div className="categories d-flex justify-content-between align-items-center flex-wrap">
+               
                 {category.map((category)=>(
                    <CategoryCard key={category.slug}
                     name={category.name} 
@@ -256,26 +289,55 @@ const Home = (props) => {
                 ))}
 
                 
+                
+            
+                
+                
               </div>
             </div>
           </div>
         </div>
       </section>
       <section className="featured-wrapper py-5 home-wrapper-2 ">
-        <div className="container-xxl">
-          <div className="row ">
+        <div className="container-xxl ">
+          <div className="row  ">
             <div className="col-12 ">
               <h3 className="section-heading">Featured Collections</h3>
             </div>
+
             {data.map((product) => (
-              <ProductCard
-              key={product.slug}
-                productTitle={product.title}
-                price={product.price}
-                productImg1={product.thumbnail}
-                productImg2={product.imageUrls[1]}
-              />
+
+              <ProductCard 
+              slug={product.slug}
+              key={product.id}
+              productTitle={product.title}
+              price={product.price}
+              productImg1={product.thumbnail}
+              productImg2={product.imageUrls[1]}
+              onClick={()=>handleClick(product.slug)}
+
+/>
+
+
+
+                
+
+
+
+
+
+              
+             
+              
+
             ))}
+
+
+
+            
+          
+              
+            
 
 
     
@@ -375,7 +437,8 @@ const Home = (props) => {
             </div>
             {popularProduct.map((product) => (
               <ProductCard
-              key={product.slug}
+              key={product.id}
+              slug={product.id}
                 productTitle={product.title}
                 price={product.price}
                 productImg1={product.thumbnail}

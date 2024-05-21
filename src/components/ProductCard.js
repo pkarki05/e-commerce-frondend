@@ -1,25 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import watch from '../images/watch.jpg'
 import watch02 from '../images/watch-02.jpg'
 import waishList from '../images/wish.svg'
 import productCompare from '../images/prodcompare.svg'
 import view from '../images/view.svg'
 import addCart from '../images/add-cart.svg'
+import { ProductInfo } from '../redux/Product/ProductAction';
+import './productcart.css'
+import { CiHeart } from "react-icons/ci";
+import { FcLike } from "react-icons/fc";
 
 
 const ProductCard = (props) => {
-    const { grid, brand, productTitle, price, description, productImg1, productImg2, id } = props;
+    const { grid, brand, productTitle, price, description, productImg1, productImg2, slug } = props;
+    const location=useLocation()
+    
+    const [isLiked, setIsLiked] = useState(false);
 
-    let location=useLocation()
+    const handleWishlistClick = () => {
+        setIsLiked(!isLiked);
+    };
+    
+    
+   
   return (
     <>
-    <div className={`${location.pathname=='/store'?`gr-${grid}`:'col-3 mb-3'}`}>
+    <div className={`${location.pathname=='/store'?`gr-${grid}`:'col-3 mb-3 '}`}  >
+        <Link to={`product/${slug}`}>
+
         <div className="product-card position-relative">
-            <div className="wishlist-icon position-absolute">
+            <div className="wishlist-icon position-absolute"onClick={handleWishlistClick} >
                 <Link>
-                <img src={waishList} alt="" />
+                <div className='love-icon'>
+                {isLiked ? <FcLike className='heart-unfill' /> : <CiHeart className='heart-fill' />}
+
+
+                </div>
+
                 </Link>
             </div>
             <div className="product-image">
@@ -46,16 +65,11 @@ const ProductCard = (props) => {
                 <p className={`description ${grid===12 ? 'd-grid':'d-none'}`}>{description}</p>
 
                 
-                <p className="price">${price}</p>
+                <p className="price text-dark">${price}</p>
             </div>
             <div className="action-bar position-absolute">
                 <div className="d-flex flex-column">
-                    <Link>
-                    <img src={productCompare} alt="" />
-                    </Link>
-                    <Link>
-                    <img src={view} alt="" />
-                    </Link>
+                    
                     <Link>
                     <img src={addCart} alt="" />
                     </Link>
@@ -63,7 +77,7 @@ const ProductCard = (props) => {
 
             </div>
         </div>
-      
+        </Link>
     </div>
   
     </>
