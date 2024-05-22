@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import MetaHelmentComp from '../components/MetaHelmentComp'
 import BreadCrum from '../components/BreadCrum'
 import { MdDeleteForever, MdOutlineDeleteForever } from "react-icons/md";
@@ -16,6 +16,10 @@ import { FiMinus } from "react-icons/fi";
 const Cart = () => {
     const dispatch=useDispatch()
     const cartItems=useSelector(state=>state.cart.cartItems)
+
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    });
 
     const handleIncrement=(incQty)=>{
         dispatch(addToCart(incQty))

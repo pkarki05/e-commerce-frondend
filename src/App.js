@@ -17,8 +17,10 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ShopByCategory from './pages/ShopByCategory';
 
 function App() {
+  
   return (
     <>
     <BrowserRouter>
@@ -28,6 +30,7 @@ function App() {
         <Route path='about' element={<About/>}/>
         <Route path='contact' element={<Contact/>}/>
         <Route path='store' element={<OurStore/>}/>
+        <Route path='/category/:slug' element={<ShopByCategory/>}/>
         <Route path='/product/:slug' element={<SingleProduct/>}/>
         <Route path='wishlist' element={<WishList/>}/>
         <Route path='cart' element={<Cart/>}/>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import MetaHelmentComp from '../components/MetaHelmentComp'
 import BreadCrum from '../components/BreadCrum'
 import { Link } from 'react-router-dom'
@@ -10,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [form, setForm] = useState({});
     const navigate=useNavigate();
+
+    useLayoutEffect(() => {
+      window.scrollTo(0, 0)
+  });
 
     const inputFields = [
         {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import MetaHelmentComp from '../components/MetaHelmentComp';
 import BreadCrum from '../components/BreadCrum';
 import ProductCard from '../components/ProductCard';
@@ -19,6 +19,9 @@ const SingleProduct = () => {
 
     const { productList } = useSelector(state => state.product);
    
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    });
 
     useEffect(() => {
         const productInfo = productList.find((product) => product.slug === slug);
@@ -50,7 +53,7 @@ const SingleProduct = () => {
         <>
             <MetaHelmentComp title={form?.title || 'Product Name'} />
             <BreadCrum title={form?.title || 'Product Name'} />
-            <div className="main-product-wrapper py-5 home-wrapper-2">
+            <div className="main-product-wrapper py-5 home-wrapper-2"  >
                 <div className="container-xxl">
                     <div className="row">
                         <div className="col-6">

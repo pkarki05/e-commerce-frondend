@@ -47,6 +47,7 @@ a{
 .header-top-strip{
   border-bottom: 1px solid var(--color-top-banner2);
   background-color: var(--color-top-banner);
+  
 }
 .header-upper{
   background-color: var(--color-top-banner);
@@ -160,6 +161,11 @@ footer .input-group-text{
   line-height: 28px;
   color:var(---color-131921) ;
 }
+.main-product-wrapper{
+  position: sticky;
+  top: 0;
+}
+
 .small-banner-content {
   top: 25%;
   left: 10%;
@@ -808,28 +814,9 @@ review:not(:last-child){
   color: white;
   font-weight: 200;
 }
-/* .search-results{
-  position: absolute;
-  top: 100%;
-  left: 13px;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.header-position{
+  position: sticky;
+  top: 0;
   z-index: 1000;
-  max-width: 300px;
-  overflow-y: auto;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 
 }
-
-.search-results li{
-  padding: 10px;
-  cursor: pointer;
-
-}
-.search-results li:hover{
-  background-color: #f0f0f0;
-} */

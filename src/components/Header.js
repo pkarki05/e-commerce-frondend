@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { CiSearch } from "react-icons/ci";
 import compareImage from '../images/compare.svg'
 import useImage from '../images/user.svg'
 import cart from '../images/cart.svg'
 import menu from '../images/menu.svg'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import '../search.css'
+import { fetchCategoryAction } from '../redux/Category/CategoryAction';
 import '../search.css'
 
 
@@ -14,9 +16,24 @@ import '../search.css'
 const Header = () => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredProducts, setFilteredProduct]=useState([])
+  const [category,setCategory]=useState([])
   const products=useSelector(state=>state.product.productList)
+  const categories=useSelector(state=>state.category.categoryList)
   const cartItems=useSelector(state=>state.cart.cartItems)
   const navigate=useNavigate()
+  const dispatch=useDispatch()
+
+useEffect(()=>{
+  dispatch(fetchCategoryAction)
+  console.log('categories',categories)
+  
+
+},[dispatch])
+
+useEffect(()=>{
+  setCategory(categories)
+},[categories,dispatch])
+
 
   const calculateTotal=()=>{
     return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || item.cartQuantity)),0)
@@ -124,15 +141,16 @@ const handleSearchSelect=(product)=>{
    <span className='me-3 d-inline-block'> Shop Categories</span> 
   </button>
   <ul className="dropdown-menu text-white" aria-labelledby="dropdownMenuButton1">
+  {categories.map((cat)=>(
+
     <li>
-      <Link className="dropdown-item text-white" to="#">Action</Link>
+              <Link to={`/category/${cat.slug}`} className="dropdown-item text-white" >{cat.name}</Link>
+
+
+  
       </li>
-    <li>
-      <Link className="dropdown-item text-white" to="#">Another action</Link>
-      </li>
-    <li>
-      <Link className="dropdown-item " to="#">Something else here</Link>
-      </li>
+          ))}
+    
   </ul>
 </div>
         </div>

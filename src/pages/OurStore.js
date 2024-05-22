@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import BreadCrum from '../components/BreadCrum'
 import MetaHelmentComp from '../components/MetaHelmentComp'
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
@@ -8,7 +8,7 @@ import { CategoryInfo, ProductInfo } from '../redux/Product/ProductAction';
 
 const OurStore = ({title}) => {
     const [sortingOption, setSortingOption] = useState('price-ascending');
-    const [grid, setGrid] = useState(4);
+    const [grid, setGrid] = useState(12);
     const [products, setProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [activeCount, setActiveCount] = useState(0);
@@ -19,7 +19,9 @@ const OurStore = ({title}) => {
     const [endPrice, setEndPrice] = useState();
 
 
-    
+    useLayoutEffect(() => {
+      window.scrollTo(0, 0)
+  });
   
     // Function to handle sorting option change
     const handleSortChange = (e) => {
