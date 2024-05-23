@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import MetaHelmentComp from '../components/MetaHelmentComp'
 import BreadCrum from '../components/BreadCrum'
 import { FaHome } from "react-icons/fa";
@@ -10,6 +10,9 @@ import { FaCircleInfo } from "react-icons/fa6";
 
 
 const Contact = () => {
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+});
   return (
     <>
 <MetaHelmentComp title={'Contact Us'}/>

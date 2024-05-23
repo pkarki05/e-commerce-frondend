@@ -22,6 +22,7 @@ const ProductCard = (props) => {
     const [form, setForm] = useState({});
     const [isLiked, setIsLiked] = useState(false);
     const { productList } = useSelector(state => state.product);
+
     const dispatch=useDispatch()
    
 
@@ -83,12 +84,12 @@ const ProductCard = (props) => {
                 
                 <p className="price text-dark">${price}</p>
             </div>
-            <div className="action-bar position-absolute" onClick={()=>handleClick(form)} >
+            <div className="action-bar position-absolute"  >
                 <div className="d-flex flex-column">
                     
-                    <button className='border-0 bg-white'>
-                    <img src={addCart} alt="" />
-                    </button>
+                    <Link className='border-0 bg-white' onClick={()=>handleClick(form)}>
+                    <img src={addCart} alt="" width='22px' />
+                    </Link>
                 </div>
 
             </div>

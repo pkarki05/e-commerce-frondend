@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../search.css'
 import { fetchCategoryAction } from '../redux/Category/CategoryAction';
 import '../search.css'
-
+import { HiMiniShoppingBag } from "react-icons/hi2";
 
 
 
@@ -36,7 +36,7 @@ useEffect(()=>{
 
 
   const calculateTotal=()=>{
-    return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || item.cartQuantity)),0)
+    return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || 1)),0)
 }
 
 const handleSeachChange=(e)=>{
@@ -101,22 +101,26 @@ const handleSearchSelect=(product)=>{
           <div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
 
 
-<div>
-<Link className='d-flex align-items-center gap-10 text-white' to='/login'>
-<img src={useImage} alt="user" />
-<p className='mb-0'>
-  Log in <br /> My Account
+<div className='d-flex login-container'>
+<Link className='login-link' to='/login'>
+<img src={useImage} alt="user" width='30px' />
+<p className='mb-0 text-white login-text'>
+  Log in 
 </p>
 </Link>
 </div>
 <div>
-<Link to='/cart' className="d-flex align-items-center gap-10 text-white">
+<Link to='/cart' className="d-flex align-items-center gap-10 text-white cart-link">
 <div className="d-flex flex-column gap-10">
+  {cartItems.length>0 && (
+    <span className="badge bg-danger text-light rounded-circle qty-count position-absolute" >{cartItems.length}</span>
+  )}
 
-<span className="badge bg-danger text-light rounded-circle qty-count position-absolute" >{cartItems.length}</span>
-<img src={cart} alt="cart"  className='text-light position-relative'/>
+<HiMiniShoppingBag className='text-white position-relative fs-2' />
 
-<p className='mb-0 position-absolute cart-total'>${calculateTotal()} </p>
+
+<p className='mb-0 position-absolute cart-total'>  {calculateTotal() > 0 ? `$${calculateTotal()}` : ''}
+ </p>
 </div>
 </Link>
 </div>
@@ -142,13 +146,11 @@ const handleSearchSelect=(product)=>{
   </button>
   <ul className="dropdown-menu text-white" aria-labelledby="dropdownMenuButton1">
   {categories.map((cat)=>(
+    <li className='category-items '>
+      <Link to={`/category/${cat.slug}`} className=" text-white" > {cat.name} </Link>
 
-    <li>
-              <Link to={`/category/${cat.slug}`} className="dropdown-item text-white" >{cat.name}</Link>
 
-
-  
-      </li>
+    </li>
           ))}
     
   </ul>
@@ -156,9 +158,9 @@ const handleSearchSelect=(product)=>{
         </div>
         <div className="menu-links">
           <div className='d-flex align-items-center gap-15'>
-            <NavLink className='text-white' to=''>Home</NavLink>
-            <NavLink className='text-white' to='/store'>Our Store</NavLink>
-            <NavLink className='text-white' to='/contact'>Contacs</NavLink>
+            <NavLink className='nav-link text-white ' to=''>Home</NavLink>
+            <NavLink className='nav-link text-white' to='/store'>Our Store</NavLink>
+            <NavLink className='nav-link text-white' to='/contact'>Contacs</NavLink>
           </div>
         </div>
 

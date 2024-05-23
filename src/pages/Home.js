@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Marquee from "react-fast-marquee";
 import BlogCart from '../components/BlogCart';
@@ -34,6 +34,7 @@ import CategoryCard from '../components/CategoryCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategoryAction } from '../redux/Category/CategoryAction';
 import { Button } from 'react-bootstrap';
+import { addToCart } from '../redux/Cart/CartSlice';
 
 
 
@@ -48,10 +49,11 @@ const Home = (props) => {
   const{slug}=useParams()
   const {productList}=useSelector(state=>state.product)
   const {categoryList}=useSelector(state=>state.category)
-  console.log('category', categoryList)
-  console.log('product', productList)
+  
 
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+});
 
   useEffect(()=>{
     dispatch(fetchProductAction())
@@ -70,40 +72,29 @@ const Home = (props) => {
     </Link>
 
   }
+ 
   
 
   
-  // useEffect(() => {
-  //   // Call ProductInfo function when component mounts
-  //   const fetchData = async () => {
-  //     const productData = await ProductInfo('slug'); // Pass the uid or any other necessary parameter
-  //     const categoryData=await CategoryInfo('slug')
-    
-  //     setCategory(categoryData || [])
-  //     setData(productData || []); // Ensure data is initialized as an empty array if productData is null
-  //     console.log(productData)
+ 
+
+  //  useEffect(() => {
+  //   const fetchSpecialProducts = async () => {
+  //     try {
+  //       const products = await ProductInfo();
+  //       // Filter products that have salesPrice, salesStartAt, and salesEndAt
+  //       const filteredProducts = products.filter(
+  //         (product) =>
+  //           product.salesPrice && product.salesStartAt && product.salesEndAt
+  //       );
+  //       setSpecialProducts(filteredProducts);
+  //     } catch (error) {
+  //       console.error('Error fetching special products: ', error);
+  //     }
   //   };
-  //   fetchData();
+
+  //   fetchSpecialProducts();
   // }, []);
-   // Run once when component mounts
-
-   useEffect(() => {
-    const fetchSpecialProducts = async () => {
-      try {
-        const products = await ProductInfo();
-        // Filter products that have salesPrice, salesStartAt, and salesEndAt
-        const filteredProducts = products.filter(
-          (product) =>
-            product.salesPrice && product.salesStartAt && product.salesEndAt
-        );
-        setSpecialProducts(filteredProducts);
-      } catch (error) {
-        console.error('Error fetching special products: ', error);
-      }
-    };
-
-    fetchSpecialProducts();
-  }, []);
 
   useEffect(() => {
     const fetchPopularProducts = async () => {
@@ -123,27 +114,27 @@ const Home = (props) => {
     fetchPopularProducts();
   }, []);
 
-  useEffect(() => {
-    // Calculate duration for each product and update the state
-    const productsWithDuration = specialProduct.map((product) => {
-      const startDate = new Date(product.salesStartAt);
-      const endDate = new Date(product.salesEndAt);
+  // useEffect(() => {
+  //   // Calculate duration for each product and update the state
+  //   const productsWithDuration = specialProduct.map((product) => {
+  //     const startDate = new Date(product.salesStartAt);
+  //     const endDate = new Date(product.salesEndAt);
 
-      // Calculate difference in milliseconds
-      const durationMs = endDate.getTime() - startDate.getTime();
+  //     // Calculate difference in milliseconds
+  //     const durationMs = endDate.getTime() - startDate.getTime();
 
-      // Convert milliseconds to days
-      const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+  //     // Convert milliseconds to days
+  //     const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
 
-      // Return product object with duration
-      return {
-        ...product,
-        durationDays: durationDays
-      };
-    });
+  //     // Return product object with duration
+  //     return {
+  //       ...product,
+  //       durationDays: durationDays
+  //     };
+  //   });
 
-    setProductsWithDuration(productsWithDuration);
-  }, [specialProduct]); // Trigger effect when specialProduct changes
+  //   setProductsWithDuration(productsWithDuration);
+  // }, [specialProduct]); // Trigger effect when specialProduct changes
    
   
 
@@ -314,36 +305,10 @@ const Home = (props) => {
               price={product.price}
               productImg1={product.thumbnail}
               productImg2={product.imageUrls[1]}
-              onClick={()=>handleClick(product.slug)}
+              onClick={()=>handleClick(product.slug)}/>
 
-/>
-
-
-
-                
-
-
-
-
-
-              
-             
-              
 
             ))}
-
-
-
-            
-          
-              
-            
-
-
-    
-           
-         
-        
           </div>
         </div>
       </section>
@@ -414,8 +379,9 @@ const Home = (props) => {
             </div>
           </div>
           <div className="row">
-            {productsWithDuration.map((product)=>(
+            {data.map((product)=>(
               <SpecialProduct title={product.title}
+              slug={product.slug}
               productImage={product.thumbnail}
               price={product.price}
               salesPrice={product.salesPrice}
@@ -437,8 +403,8 @@ const Home = (props) => {
             </div>
             {popularProduct.map((product) => (
               <ProductCard
-              key={product.id}
-              slug={product.id}
+              key={product.slug}
+              slug={product.slug}
                 productTitle={product.title}
                 price={product.price}
                 productImg1={product.thumbnail}

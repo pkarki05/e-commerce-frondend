@@ -50,4 +50,56 @@
   .search-results li:hover{
     background-color: #f0f0f0;
   }
+   .category-items{
+   
+    margin: 5px;
+    cursor: pointer;
+    padding: 10px;
+
+
+   }
+   .category-items:hover{
+    background-color: #0687d1;
+    transform: scale(1.1);
+    transition: 0.2s;
+
+   }
+   .login-container img{
+
+    padding: 2px;
+    
+   }
+   .login-text{
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 300;
+   }
+   
+   .nav-link {
+    color: white;
+    transition: background-color 0.2s, color 0.3s;
+    transform: scale(1.1);
+    font-style: bold;
+
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 800;
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .login-link, .cart-link {
+    transition: background-color 0.3s;
+  }
+  
+  .login-link:hover, .cart-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+  }
+  
+  .header-upper-links .d-flex.login-container:hover .login-text {
+    color: white;
+  }
   
