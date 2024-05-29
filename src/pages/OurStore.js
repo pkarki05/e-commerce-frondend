@@ -117,8 +117,11 @@ const OurStore = ({title}) => {
     }
   };
   
-    const filteredProducts = filterProductsByCategory(selectedCategory);
-    const filteredAndSortedProducts = filterProductsByPriceRange(filterProductsByAvailability(filteredProducts));
+  const filteredProducts = filterProductsByCategory(selectedCategory);
+  const filteredAndAvailableProducts = filterProductsByAvailability(filteredProducts);
+  const filteredByPriceProducts = filterProductsByPriceRange(filteredAndAvailableProducts);
+  const filteredAndSortedProducts = sortProducts(filteredByPriceProducts);
+
 
 
     
@@ -216,7 +219,7 @@ const OurStore = ({title}) => {
 
                         <div className="d-flex align-items-center gap-10">
                             <p className="mb-0 d-block">Sort By</p>
-                            <select name="form-control form-select" id="" onChange={handleSortChange}>
+                            <select className="form-control form-select" id="" onChange={handleSortChange }>
                                 <option value="price-ascending"  >Price low to high</option>
                                 <option value="price-descending">Price high to row</option>
                                 <option value="name-ascending">Alphabetically A to Z</option>

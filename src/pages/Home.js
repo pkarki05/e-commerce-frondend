@@ -4,7 +4,8 @@ import Marquee from "react-fast-marquee";
 import BlogCart from '../components/BlogCart';
 import ProductCard from '../components/ProductCard';
 import SpecialProduct from '../components/SpecialProduct';
-import mainBanner from '../images/main-banner-1.jpg'
+import mainBanner1 from '../images/main-banner-1.jpg'
+import mainBanner from '../images/main-banner.jpg'
 import catBanner04 from '../images/catbanner-04.jpg'
 import catBanner01 from '../images/catbanner-01.jpg'
 import catBanner02 from '../images/catbanner-02.jpg'
@@ -72,70 +73,60 @@ const Home = (props) => {
     </Link>
 
   }
- 
+  const handleAddToCart = (product) => {
+    dispatch(addToCart({...product}));
+};
   
 
   
- 
+  
 
-  //  useEffect(() => {
-  //   const fetchSpecialProducts = async () => {
-  //     try {
-  //       const products = await ProductInfo();
-  //       // Filter products that have salesPrice, salesStartAt, and salesEndAt
-  //       const filteredProducts = products.filter(
-  //         (product) =>
-  //           product.salesPrice && product.salesStartAt && product.salesEndAt
-  //       );
-  //       setSpecialProducts(filteredProducts);
-  //     } catch (error) {
-  //       console.error('Error fetching special products: ', error);
-  //     }
-  //   };
+   useEffect(() => {
+    if(productList.length){
+      const special = productList.filter(
+        (product) =>
+          product.salesPrice && product.salesStartAt && product.salesEndAt
+      );
+      setSpecialProducts(special);
 
-  //   fetchSpecialProducts();
-  // }, []);
-
-  useEffect(() => {
-    const fetchPopularProducts = async () => {
-      try {
-        const products = await ProductInfo();
+      //filter popular product
+      
         // Filter products that have salesPrice, salesStartAt, and salesEndAt
-        const filteredProducts = products.filter(
+        const popular = productList.filter(
           (product) =>
             product.price <=1000
         );
-        setPopularProduct(filteredProducts);
-      } catch (error) {
-        console.error('Error fetching special products: ', error);
-      }
-    };
+        setPopularProduct(popular);
 
-    fetchPopularProducts();
-  }, []);
+        //calculate duration for special products
+        const productsWithDuration = special.map((product) => {
+          const startDate = new Date(product.salesStartAt);
+          const endDate = new Date(product.salesEndAt);
+    
+          // Calculate difference in milliseconds
+          const durationMs = endDate.getTime() - startDate.getTime();
+    
+          // Convert milliseconds to days
+          const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+    
+          // Return product object with duration
+          return {
+            ...product,
+            durationDays: durationDays
+          };
+        });
+    
+        setProductsWithDuration(productsWithDuration);
+    
 
-  // useEffect(() => {
-  //   // Calculate duration for each product and update the state
-  //   const productsWithDuration = specialProduct.map((product) => {
-  //     const startDate = new Date(product.salesStartAt);
-  //     const endDate = new Date(product.salesEndAt);
+    }
+    
+        
+    
 
-  //     // Calculate difference in milliseconds
-  //     const durationMs = endDate.getTime() - startDate.getTime();
+  }, [productList]);
 
-  //     // Convert milliseconds to days
-  //     const durationDays = Math.floor(durationMs / (1000 * 60 * 60 * 24));
-
-  //     // Return product object with duration
-  //     return {
-  //       ...product,
-  //       durationDays: durationDays
-  //     };
-  //   });
-
-  //   setProductsWithDuration(productsWithDuration);
-  // }, [specialProduct]); // Trigger effect when specialProduct changes
-   
+  
   
 
 
@@ -144,23 +135,36 @@ const Home = (props) => {
       <section className="home-wrapper-1 py-5">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-6">
-              
-              
-              <div className="main-banner  position-relative">
-                <img className='img-fluid rounded-3' 
-                src={mainBanner} 
-                alt="main-banner" />
-                <div className="main-banner-content position-absolute">
-                  <h4>SUPERCHARGED FOR PRO</h4>
-                  <h3>iPad S13+ Pro </h3>
-                  <p>From $999 or $44.99/month</p>
-                  
-                </div>
+          <div className="col-6">
+  <div className="position-relative">
+    <div className='main-banner '>
+    <img className='img-fluid rounded-3' 
+    src={mainBanner} 
+    alt="main-banner" />
+    <div className="main-banner-content position-absolute">
+      <h4>SUPERCHARGED FOR PRO</h4>
+      <h3>iPad S13+ Pro</h3>
+      <p>From $999 or $44.99/month</p>
+    </div>
+    </div> 
+  </div>
+  <div className=" position-relative">
+    <div className='main-banner1'>
+    <img className='img-fluid rounded-3' 
+    src={mainBanner1} 
+    alt="main-banner" />
+    <div className="main-banner-content position-absolute">
+      <h4>SUPERCHARGED FOR PRO</h4>
+      <h3>iPad S13+ Pro</h3>
+      <p>From $999 or $44.99/month</p>
+    </div>
 
-              </div>
+    </div>
+   
+  </div>
+</div>
 
-            </div>
+
             <div className="col-6 ">
             <div className="d-flex flex-wrap justify-content-between allign-items-center gap-10">
               <div className="small-banner position-relative">
@@ -379,7 +383,7 @@ const Home = (props) => {
             </div>
           </div>
           <div className="row">
-            {data.map((product)=>(
+            {productsWithDuration.map((product)=>(
               <SpecialProduct title={product.title}
               slug={product.slug}
               productImage={product.thumbnail}
@@ -387,7 +391,8 @@ const Home = (props) => {
               salesPrice={product.salesPrice}
               days={product.durationDays}
               quantity={product.quantity}
-              progressValue={product.quantity}/>
+              progressValue={product.quantity}
+              handleAddToCart={()=>handleAddToCart(product)}/>
 
 
             ))}

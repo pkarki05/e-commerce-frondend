@@ -20,9 +20,9 @@ const Contact = () => {
     <div className="contact-wrapper py-5 home-wrapper-2">
       <div className="container-xxl">
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 p-2">
           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13040.827947691347!2d149.13862204999998!3d-35.201312849999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sau!4v1710657200224!5m2!1sen!2sau" 
-       width="800" height="450" className="border-0" 
+       width="90%" height="450" className="border-0" 
        allowfullscreen="" loading="lazy" 
        referrerpolicy="no-referrer-when-downgrade">
 

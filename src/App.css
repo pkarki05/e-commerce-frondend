@@ -20,8 +20,8 @@ a{
   ---color-dark-brown:#66471d;
   ---color-image-text:#bf4800;
   ---color-131921:#131921;
-  ---color-button:#6C0BA9;
-  ---color-button-light:#A020F0;
+  ---color-button:#028702;
+  ---color-button-light:#027002;
   ---color-f5f5f7:#f5f5f7;
   ---color-131921:#131921;
   ---color-1c1c1b:#1c1c1b;
@@ -136,17 +136,19 @@ footer .input-group-text{
 
 /* home wrapper-1 start */
 .main-banner-content {
-  top: 15%;
-  left: 10%;
+  top: 60px ;
+  left: 5%;
 
 }
 .main-banner-content h4{
-  font-size: 16PX;
+  font-size: 20PX;
   font-weight: 400;
   line-height: 24PX;
   color: var(---color-image-text);
 }
 .main-banner-content h3{
+  margin-top: 32px;
+  margin-bottom: 10px;
   font-size: 42px;
   letter-spacing: -2px;
   font-weight: 500;
@@ -819,4 +821,48 @@ review:not(:last-child){
   top: 0;
   z-index: 1000;
 
+}
+
+
+/* carousel implementation for home page */
+.main-banner,
+.main-banner1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 8s ease-in-out;
+}
+
+.main-banner.active,
+.main-banner1.active {
+  opacity: 1;
+}
+
+@keyframes carousel {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.main-banner {
+  animation: carousel 8s infinite;
+}
+
+.main-banner1 {
+  animation: carousel 8s infinite 4s;
 }
