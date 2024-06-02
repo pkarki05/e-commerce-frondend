@@ -18,7 +18,7 @@ import Checkout from './pages/Checkout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ShopByCategory from './pages/ShopByCategory';
-import ShippingAddress from './components/ShippingAddress';
+import ShippingAddress from './components/checkout/ShippingAddress';
 import PaymentProcess from './components/PaymentProcess';
 
 function App() {
