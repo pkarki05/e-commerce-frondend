@@ -1,86 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { useSelector } from 'react-redux';
+import CheckoutForm from './checkout/CheckoutForm';
+
+const stripePromise = loadStripe('pk_test_51PN6fJDmaPfxxxi1L6rUtLSeUmoBPUyP7cXfwi1rbMiGb87rdf06yfMTHpLfkkgnSY7mEE7Ba5D95yCX4QpOCqrG00fakty5tj');
 
 const PaymentProcess = ({ handleOnSubmit }) => {
-    const [formData, setFormData] = useState({
-        holderName: '',
-        cardNumber: '',
-        expiryDate: '',
-        cvv: ''
-    });
 
-    const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-        console.log(value)
-    };
+  const cartItems = useSelector(state => state.cart.cartItems);
+  
+  const calculateSubTotal = () => {
+    return cartItems.reduce((total, item) => total + ((item.salesPrice || item.price) * item.cartQuantity), 0);
+  };
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        handleOnSubmit(formData);
-    };
+  // Convert the amount to the smallest currency unit if needed
+  const amount = Math.round(calculateSubTotal() * 100);
 
-    return (
-        <>
-            <form className='d-flex gap-15 flex-wrap' onSubmit={onSubmit}>
-                <div className='w-75'>
-                    <input
-                        type="text"
-                        name="holderName"
-                        className='form-control'
-                        placeholder='Name on Card'
-                        value={formData.holderName}
-                        onChange={handleOnChange}
-                        required
-                    />
-                </div>
-                <div className='w-75'>
-                    <input
-                        type="number"
-                        name="cardNumber"
-                        className='form-control'
-                        placeholder='Card Number'
-                        value={formData.cardNumber}
-                        onChange={handleOnChange}
-                        required
-                    />
-                </div>
-                <div className='w-75 d-flex gap-4'>
-                    <div className='w-50'>
-                        <input
-                            type="date"
-                            name="expiryDate"
-                            className='form-control'
-                            placeholder='Expiry Date'
-                            value={formData.expiryDate}
-                            onChange={handleOnChange}
-                            required
-                        />
-                    </div>
-                    <div className='w-50'>
-                        <input
-                            type="number"
-                            name="cvv"
-                            className='form-control'
-                            placeholder='CVV'
-                            value={formData.cvv}
-                            onChange={handleOnChange}
-                            required
-                        />
-                    </div>
-                </div>
-                <div className="w-75 m-3">
-                    <div className="d-flex justify-content-between">
-                        <Link to='' className='text-dark'>&#60; Go back</Link>
-                        <button type="submit" className='button'>Pay Now</button>
-                    </div>
-                </div>
-            </form>
-        </>
-    );
+  return (
+    <Elements stripe={stripePromise}>
+      <CheckoutForm amount={amount} handleOnSubmit={handleOnSubmit} />
+    </Elements>
+  );
 };
 
 export default PaymentProcess;

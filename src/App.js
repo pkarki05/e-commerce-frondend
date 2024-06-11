@@ -20,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ShopByCategory from './pages/ShopByCategory';
 import ShippingAddress from './components/checkout/ShippingAddress';
 import PaymentProcess from './components/PaymentProcess';
+import CheckOutSuccess from './components/checkout/CheckOutSuccess';
 
 function App() {
   
@@ -37,6 +38,7 @@ function App() {
         <Route path='wishlist' element={<WishList/>}/>
         <Route path='cart' element={<Cart/>}/>
         <Route path='checkout' element={<Checkout/>}/>
+        <Route path='checkout-success' element={<CheckOutSuccess/>}/>
         <Route path='checkout/shipping' element={<ShippingAddress/>}/>
         <Route path='checkout/payment' element={<PaymentProcess/>}/>
         <Route path='login' element={<Login/>}/>

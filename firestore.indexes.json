@@ -1,0 +1,23 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Products",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "salesEndAt",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "salesPrice",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "salesStartAt",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
