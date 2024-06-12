@@ -1,58 +1,67 @@
-import { createUserWithEmailAndPassword,sendPasswordResetEmail,signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db } from "../../firrebase/firebaseConfig";
 import { toast } from "react-toastify";
-import { doc, setDoc } from "firebase/firestore";
-
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { setUser } from "./UserSlice";
 
 export const createNewUser = async (userInfo) => {
-
-    try {
-        // Create user account
-        const userCredential = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
-        
-        // Display pending toast
-       await  toast.promise(Promise.resolve(), { pending: 'Please Wait...' });
-        const user = userCredential.user;
-        const userDocRef = doc(db, 'Customers', user.uid);
-
-        // Save additional user data to Firestore
-        const { password, confirmPassword, ...rest } = userInfo;
-        await setDoc(userDocRef, rest);        
-        console.log('New user created:', user);
-    } catch (error) {
-        console.log("Error", error);
-        toast.error("Error", error.message);
-    }
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
+    await toast.promise(Promise.resolve(), { pending: 'Please Wait...' });
+    const user = userCredential.user;
+    const userDocRef = doc(db, 'Customers', user.uid);
+    const { password, confirmPassword, ...rest } = userInfo;
+    await setDoc(userDocRef, rest);        
+    console.log('New user created:', user);
+  } catch (error) {
+    console.log("Error", error);
+    toast.error("Error", error.message);
+  }
 }
-export const loginUser =
- async ({ email, password }) =>
-  {
-    try {
-      const authSnapPromise = signInWithEmailAndPassword(auth, email, password);
-      toast.promise(authSnapPromise, {
-        pending: "In progress...",
-      });
-      const { user } = await authSnapPromise;
-      toast.success('Login Successful')
-    } catch (e) {
-      toast.error("Login error");
-    }
-  };
-  export const handleForgotPassword = async (e) => {
-    
-  
-  
-    
-      try {
-        
-  
-        // Email exists, send password reset email
-        await sendPasswordResetEmail(auth, e.email);
-        toast.success('Email sent successfully!');
-      } catch (error) {
-        console.error("Error sending password reset email:", error);
-        toast.error("Failed to send password reset email.");
-      }
-  
-    } 
 
+export const loginUser = ({ email, password }) => async (dispatch) => {
+  try {
+    const authSnapPromise = signInWithEmailAndPassword(auth, email, password);
+    toast.promise(authSnapPromise, { pending: "In progress..." });
+    const { user } = await authSnapPromise;
+    dispatch(getUserInfo(user.uid));
+    toast.success('Login Successful');
+  } catch (e) {
+    toast.error("Login error");
+  }
+};
+
+export const handleForgotPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toast.success('Email sent successfully!');
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    toast.error("Failed to send password reset email.");
+  }
+}
+
+export const getUserInfo = (uid) => async (dispatch) => {
+  try {
+    const userSnap = await getDoc(doc(db, "Customers", uid));
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      dispatch(setUser({ ...userData, uid }));
+    } else {
+      console.log("No such document!");
+    }
+  } catch (e) {
+    toast.error(e.message);
+  }
+};
+export const userLogOut=()=>async(dispatch)=>{
+  try {
+    await signOut(auth);
+    dispatch(setUser({}))
+    toast.success("Logout Sucessful")
+    
+  } catch (error) {
+    toast.error("Logout Error", +error.message)
+    
+  }
+}

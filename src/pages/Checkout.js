@@ -12,6 +12,8 @@ const Checkout = () => {
     const currentStep = useSelector((state) => state.checkout.currentStep);
     const contactInfo = useSelector((state) => state.checkout.contactInfo) || {};
     const shippingAddress = useSelector((state) => state.checkout.shippingAddress) || {};
+    const {user} = useSelector(state => state.user)|| {};
+
 
     const handleOnEdit = () => {
         dispatch(setStep('shipping'));
@@ -42,8 +44,9 @@ const Checkout = () => {
                 return (
                     <>
                         <ShippingSummary 
-                            name={contactInfo.fName} 
-                            email={contactInfo.email} 
+                            fName={user.fname} 
+                            lName={user.lname}
+                            email={user.email} 
                             phone={contactInfo.phone}
                             street={shippingAddress.street}
                             city={shippingAddress.city}

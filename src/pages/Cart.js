@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import MetaHelmentComp from '../components/MetaHelmentComp';
 import BreadCrum from '../components/BreadCrum';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, decreseCartQuantity, removeFromCart } from '../redux/Cart/CartSlice';
 import { MdOutlineDeleteForever } from 'react-icons/md';
@@ -9,6 +9,10 @@ import { MdOutlineDeleteForever } from 'react-icons/md';
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cart.cartItems);
+  const user = useSelector(state => state.user.user);
+  console.log("user", user)
+
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
@@ -28,6 +32,14 @@ const Cart = () => {
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + ((item.salesPrice || item.price) * item.cartQuantity), 0);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (user) {
+      navigate('/checkout');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -91,7 +103,7 @@ const Cart = () => {
                     <div className='d-flex align-items-end flex-column'>
                       <h4>Subtotal: ${calculateTotal()}</h4>
                       <p>Taxes and shipping calculated at checkout</p>
-                      <Link className='button' to='/checkout'>Procceed To Checkout</Link>
+                      <button className='button' onClick={handleProceedToCheckout}>Proceed To Checkout</button>
                     </div>
                   </div>
                 </>

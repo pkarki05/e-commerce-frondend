@@ -10,6 +10,7 @@ import '../search.css'
 import { fetchCategoryAction } from '../redux/Category/CategoryAction';
 import '../search.css'
 import { HiMiniShoppingBag } from "react-icons/hi2";
+import { userLogOut } from '../pages/auth/UserAction';
 
 
 
@@ -20,6 +21,7 @@ const Header = () => {
   const products=useSelector(state=>state.product.productList)
   const categories=useSelector(state=>state.category.categoryList)
   const cartItems=useSelector(state=>state.cart.cartItems)
+  const user =useSelector(state=>state.user.user)
   const navigate=useNavigate()
   const dispatch=useDispatch()
 
@@ -37,6 +39,9 @@ useEffect(()=>{
 
   const calculateTotal=()=>{
     return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || 1)),0)
+}
+const handleLogOut=async()=>{
+   dispatch(userLogOut())
 }
 
 const handleSeachChange=(e)=>{
@@ -102,12 +107,15 @@ const handleSearchSelect=(product)=>{
 
 
 <div className='d-flex login-container'>
-<Link className='login-link' to='/login'>
-<img src={useImage} alt="user" width='30px' />
-<p className='mb-0 text-white login-text'>
-  Log in 
-</p>
-</Link>
+ <div className='d-flex flex-column'>
+        {/* Other nav items */}
+        <img src={useImage} alt="" width="30px"/>
+        {user && user.email ? (
+          <Link onClick={handleLogOut} className='text-light font-small'>Log out</Link>
+        ) : (
+          <Link to="/login" className='text-light font-small'>Log in</Link>
+        )}
+      </div>
 </div>
 <div>
 <Link to='/cart' className="d-flex align-items-center gap-10 text-white cart-link">

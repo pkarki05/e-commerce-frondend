@@ -21,6 +21,7 @@ import ShopByCategory from './pages/ShopByCategory';
 import ShippingAddress from './components/checkout/ShippingAddress';
 import PaymentProcess from './components/PaymentProcess';
 import CheckOutSuccess from './components/checkout/CheckOutSuccess';
+import PrivateRoute from './components/checkout/PrivateRoute';
 
 function App() {
   
@@ -37,8 +38,7 @@ function App() {
         <Route path='/product/:slug' element={<SingleProduct/>}/>
         <Route path='wishlist' element={<WishList/>}/>
         <Route path='cart' element={<Cart/>}/>
-        <Route path='checkout' element={<Checkout/>}/>
-        <Route path='checkout-success' element={<CheckOutSuccess/>}/>
+        <Route path="checkout" element={<PrivateRoute element={Checkout} />} />
         <Route path='checkout/shipping' element={<ShippingAddress/>}/>
         <Route path='checkout/payment' element={<PaymentProcess/>}/>
         <Route path='login' element={<Login/>}/>
@@ -47,9 +47,9 @@ function App() {
         <Route path='terms-and-conditions' element={<TermsAndConditions/>}/>
        <Route path='refund-policy' element={<RefundPolicy/>}/>
        <Route path='shipping-policy' element={<ShippingPolicy/>}/>
-
-
       </Route>
+      <Route path='checkout-success' element={<CheckOutSuccess/>}/>
+
 
     </Routes>
     </BrowserRouter>

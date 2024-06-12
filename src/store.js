@@ -5,11 +5,13 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import cartReducer from "./redux/Cart/CartSlice";
 import checkoutReducer from "./redux/checkout/CheckOutSlice";
+import userReducer from "./pages/auth/UserSlice";
     const reducers=combineReducers({
         product:productReducer,
         category:categoryReducer,
         cart:cartReducer,
         checkout:checkoutReducer,
+        user:userReducer
 
     }) 
     const persistConfig={

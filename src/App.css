@@ -28,6 +28,10 @@ a{
 
 
 }
+.font-small{
+  font-size: 12px;
+  font-weight: 400;
+}
 
 /* header part start */
 .gap-10{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateContactInfo, updateShippingAddress } from '../../redux/checkout/CheckOutSlice';
 
@@ -20,6 +20,8 @@ const ShippingAddress = ({ onContinue, initialData, initialContactInfo }) => {
         email: initialContactInfo?.email || '',
         phone: initialContactInfo?.phone || ''
     });
+    const {user} = useSelector(state => state.user)|| {};
+
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -61,21 +63,10 @@ const ShippingAddress = ({ onContinue, initialData, initialContactInfo }) => {
     return (
         <>
             <form className='d-flex gap-15 flex-wrap justify-content-between me-3 pe-3' onSubmit={handleSubmit}>
-                <h4 className="title w-100 my-2">Contact Information</h4>
-                <div className='w-50'>
-                    <input className="form-control" placeholder='E mail Address' type='email' value={name.email} onChange={handleChange} required name='email' />
-                </div>
-                <div className='flex-grow-1'>
-                    <input className="form-control" placeholder='Phone Number' type='phone' value={name.phone} onChange={handleChange} required name='phone' />
-                </div>
-                <div className='w-50'>
-                    <input type="text" name="fName" value={name.fName} onChange={handleChange} className='form-control' placeholder='First Name' required />
-                </div>
-                <div className='flex-grow-1'>
-                    <input type="text" name="lName" value={name.lName} onChange={handleChange} className='form-control' placeholder='Last Name' required />
-                </div>
-                <h4 className='mb-3'>Shipping Address</h4>
+                <h5 className="title w-100 my-2">Contact Information</h5>
+                <p>Email:{user.email} </p>
                 <div className='w-100'>
+                <h5 className='mb-3'>Shipping Address</h5>
                     <select name="country" className='form-control form-select' value={selectedCountry} onChange={handleCountryChange} required>
                         <option value="" disabled>Select your country</option>
                         {countries.map(country => (

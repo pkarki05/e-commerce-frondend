@@ -6,10 +6,12 @@ import { Form } from 'react-bootstrap'
 import CustomInput from '../components/CustomInput'
 import { loginUser } from './auth/UserAction'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
     const [form, setForm] = useState({});
     const navigate=useNavigate();
+    const dispatch=useDispatch()
 
     useLayoutEffect(() => {
       window.scrollTo(0, 0)
@@ -35,8 +37,8 @@ const Login = () => {
 
       const handleOnSubmit = async(e) => {
         e.preventDefault();
-       await loginUser(form)
-       navigate('/cart')
+        dispatch(loginUser(form))
+       navigate('/')
 
 
       };
