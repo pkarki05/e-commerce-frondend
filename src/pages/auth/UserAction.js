@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db } from "../../firrebase/firebaseConfig";
 import { toast } from "react-toastify";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { setUser } from "./UserSlice";
 
 export const createNewUser = async (userInfo) => {
@@ -65,3 +65,15 @@ export const userLogOut=()=>async(dispatch)=>{
     
   }
 }
+export const updateUserProfile = (updatedData) => async (dispatch, getState) => {
+  try {
+      const userId = getState().user.user.id; // Assuming user ID is stored in user state
+      const userRef = doc(db, 'Customers', userId);
+      await updateDoc(userRef, updatedData);
+      
+      dispatch(setUser(updatedData));
+      toast.success("Profile updated successfully");
+  } catch (error) {
+      toast.error(`Error updating profile: ${error.message}`);
+  }
+};

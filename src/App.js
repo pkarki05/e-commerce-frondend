@@ -22,6 +22,7 @@ import ShippingAddress from './components/checkout/ShippingAddress';
 import PaymentProcess from './components/PaymentProcess';
 import CheckOutSuccess from './components/checkout/CheckOutSuccess';
 import PrivateRoute from './components/checkout/PrivateRoute';
+import UserProfile from './components/profile/UserProfile';
 
 function App() {
   
@@ -34,6 +35,7 @@ function App() {
         <Route path='about' element={<About/>}/>
         <Route path='contact' element={<Contact/>}/>
         <Route path='store' element={<OurStore/>}/>
+        <Route path='profile' element={<UserProfile/>}/>
         <Route path='/category/:slug' element={<ShopByCategory/>}/>
         <Route path='/product/:slug' element={<SingleProduct/>}/>
         <Route path='wishlist' element={<WishList/>}/>
@@ -49,8 +51,6 @@ function App() {
        <Route path='shipping-policy' element={<ShippingPolicy/>}/>
       </Route>
       <Route path='checkout-success' element={<CheckOutSuccess/>}/>
-
-
     </Routes>
     </BrowserRouter>
     <ToastContainer/>

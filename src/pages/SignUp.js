@@ -4,7 +4,7 @@ import BreadCrum from '../components/BreadCrum';
 import { createNewUser } from './auth/UserAction';
 import CustomInput from '../components/CustomInput';
 import { Form } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const SignUp = () => {
@@ -82,8 +82,9 @@ const SignUp = () => {
                                     ))}
                                 </div>
                                 <div className='mt-1'>
-                                    <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                                        <button className='button border-0'>Create</button>
+                                    <div className="mt-3 d-flex justify-content-center gap-5 align-items-center row">
+                                    <button className='button border-0'>Create</button>
+                                    <Link to='/login' className='text-primary fs-5 '>Already have an account? </Link>
                                     </div>
                                 </div>
                             </Form>

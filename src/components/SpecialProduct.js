@@ -5,8 +5,23 @@ import watch from '../images/watch.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/Cart/CartSlice';
 
-const SpecialProduct = ({productImage,title,price, salesPrice,days, hours, minutes, seconds, quantity, progressValue,handleAddToCart}) => {
-   
+const SpecialProduct = ({productImage,title,price, salesPrice,days, hours, minutes, seconds, quantity, progressValue,slug}) => {
+    const [form, setForm] = useState({});
+    const dispatch=useDispatch()
+    const { productList } = useSelector(state => state.product);
+    useEffect(() => {
+        const productInfo = productList.find((product) => product.slug === slug);
+        setForm(productInfo);
+    }, [slug, productList]);
+
+    const handleAddToCart=(product)=>{
+        dispatch(addToCart({...product}));
+
+    }
+
+
+
+
    
 
     
@@ -60,7 +75,7 @@ const SpecialProduct = ({productImage,title,price, salesPrice,days, hours, minut
 
 
                         </div>
-                        <button className='button ' onClick={handleAddToCart}>Add to Cart</button>
+                        <button className='button ' onClick={()=>handleAddToCart(form)}>Add to Cart</button>
 
 
                 </div>

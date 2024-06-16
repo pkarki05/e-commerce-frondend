@@ -69,7 +69,8 @@ a{
   color: white;
   font-size: 14px;
   padding: 12px 18px;
-  border-radius: 25px;
+  border-radius: 8px;
+  border: none;
 
 }
 .button:hover{
@@ -805,26 +806,25 @@ review:not(:last-child){
 }
 .qty-count{
   z-index: 100;
-  top: 20px;
-  right: 90px;
+  top: 5px;
+  left: 22px;
   width: 22px;
   height: 25px;
   font-size: 13px;
   font-weight: 400;
   
 }
-.cart-total{
 
-  top: 50px;
-  font-size: 14px;
-  color: white;
-  font-weight: 200;
-}
 .header-position{
   position: sticky;
   top: 0;
   z-index: 1000;
 
+}
+.shopping-cart{
+  font-size: 32px;
+  margin: 8px;
+  margin-left: 0px;
 }
 
 

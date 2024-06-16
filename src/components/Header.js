@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../search.css'
 import { fetchCategoryAction } from '../redux/Category/CategoryAction';
 import '../search.css'
-import { HiMiniShoppingBag } from "react-icons/hi2";
+import { MdAddShoppingCart } from "react-icons/md";
 import { userLogOut } from '../pages/auth/UserAction';
 
 
@@ -37,9 +37,7 @@ useEffect(()=>{
 },[categories,dispatch])
 
 
-  const calculateTotal=()=>{
-    return cartItems.reduce((total, item)=>total+(item.price*(item.cartQuantity || 1)),0)
-}
+ 
 const handleLogOut=async()=>{
    dispatch(userLogOut())
 }
@@ -74,7 +72,7 @@ const handleSearchSelect=(product)=>{
     <div className="row align-items-center">
       <div className="col-2">
         <h2>
-          <Link className='d-flex align-items-center gap-10 text-white'>Electro.</Link>
+          <Link className='d-flex align-items-center gap-10 text-white' to='/'>Electro.</Link>
         </h2>
         </div>
         <div className="col-5 position-relative">
@@ -95,17 +93,21 @@ const handleSearchSelect=(product)=>{
   <ul className='search-results'>
     {filteredProducts.map(product=>(
       <li key={product.slug} onClick={()=>handleSearchSelect(product)}>
-        {product.title}
+        <div className='d-flex gap-3 align-items-center border-bottom ms-2'>
+        <img src={product.thumbnail} alt="product image " width="40px" className='rounded-circle'/>
+        <div className='d-flex align-items center ms-2'>{product.title} </div>
+        
+        </div>
+        
+        
 
       </li>
     ))}
   </ul>
 )}
         </div>
-        <div className="col-5">
-          <div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
-
-
+<div className="col-5">
+<div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
 <div className='d-flex login-container'>
  <div className='d-flex flex-column'>
         {/* Other nav items */}
@@ -119,16 +121,15 @@ const handleSearchSelect=(product)=>{
 </div>
 <div>
 <Link to='/cart' className="d-flex align-items-center gap-10 text-white cart-link">
-<div className="d-flex flex-column gap-10">
+<div className="d-flex flex-column gap-10 position-relative">
   {cartItems.length>0 && (
     <span className="badge bg-danger text-light rounded-circle qty-count position-absolute" >{cartItems.length}</span>
   )}
 
-<HiMiniShoppingBag className='text-white position-relative fs-2' />
+<MdAddShoppingCart className='text-white position-absolute shopping-cart' />
 
 
-<p className='mb-0 position-absolute cart-total'>  {calculateTotal() > 0 ? `$${calculateTotal()}` : ''}
- </p>
+
 </div>
 </Link>
 </div>
@@ -154,11 +155,11 @@ const handleSearchSelect=(product)=>{
   </button>
   <ul className="dropdown-menu text-white" aria-labelledby="dropdownMenuButton1">
   {categories.map((cat)=>(
-    <li className='category-items '>
-      <Link to={`/category/${cat.slug}`} className=" text-white" > {cat.name} </Link>
+    
+      <Link to={`/category/${cat.slug}`} className=" text-white d-flex category-items" > <li className=' '>{cat.name}
+      </li> </Link>
 
 
-    </li>
           ))}
     
   </ul>

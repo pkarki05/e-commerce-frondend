@@ -73,9 +73,7 @@ const Home = (props) => {
     </Link>
 
   }
-  const handleAddToCart = (product) => {
-    dispatch(addToCart({...product}));
-};
+  
   
 
   
@@ -392,7 +390,7 @@ const Home = (props) => {
               days={product.durationDays}
               quantity={product.quantity}
               progressValue={product.quantity}
-              handleAddToCart={()=>handleAddToCart(product)}/>
+             />
 
 
             ))}

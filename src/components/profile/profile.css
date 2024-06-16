@@ -1,0 +1,78 @@
+/* UserProfile.css */
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #ddd;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 2em;
+    margin: 10px 0;
+}
+
+.profile-email {
+    font-size: 1.2em;
+    color: #777;
+}
+
+.profile-details {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details h2 {
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.profile-details form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-details form label {
+    font-weight: bold;
+}
+
+.profile-details form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #0056b3;
+}
