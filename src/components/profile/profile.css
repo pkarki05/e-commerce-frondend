@@ -1,13 +1,45 @@
 /* UserProfile.css */
 
 .profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    display: flex;
     background: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.sidebar {
+    width: 280px;
+    background:#fff;;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    font-size: 20px;
+    font-weight: 400;
+    border-bottom: 1px green solid;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.sidebar li:hover {
+    background: #ddd;
+}
+
+.profile-content {
+    flex: 1;
+    padding: 20px;
+}
+.profile-content h3{
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: underline
+    ;
+}
+
 
 .profile-header {
     text-align: center;
@@ -32,33 +64,24 @@
     color: #777;
 }
 
-.profile-details {
+.profile-details, .shipping-address, .shopping-history {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.profile-details h2 {
-    margin-bottom: 20px;
-}
-
-.profile-details p {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-}
-
-.profile-details form {
+.profile-details form, .shipping-address form, .shopping-history form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.profile-details form label {
+.profile-details form label, .shipping-address form label, .shopping-history form label {
     font-weight: bold;
 }
 
-.profile-details form input {
+.profile-details form input, .shipping-address form input, .shopping-history form input {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearCart } from '../../redux/Cart/CartSlice';
 import { saveOrderToFirebase } from '../../redux/customer-orders/customerOrderAction';
+import { updateUserProfile } from '../../pages/auth/UserAction';
 
 const CheckoutForm = ({ amount }) => {
   const stripe = useStripe();
@@ -57,7 +58,9 @@ const CheckoutForm = ({ amount }) => {
     if (error) {
       setPaymentStatus(`Payment failed: ${error.message}`);
     } else if (paymentIntent.status === 'succeeded') {
+       
       setPaymentStatus('Payment successful!');
+      dispatch(updateUserProfile(cartItems, user))
       cardNumberElement.clear();
       cardExpiryElement.clear();
       cardCvcElement.clear();

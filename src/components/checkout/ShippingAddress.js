@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateContactInfo, updateShippingAddress } from '../../redux/checkout/CheckOutSlice';
+import { updateUserProfile } from '../../pages/auth/UserAction';
 
 const ShippingAddress = ({ onContinue, initialData, initialContactInfo }) => {
     const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const ShippingAddress = ({ onContinue, initialData, initialContactInfo }) => {
         // Send the address data to the backend or process it further
         dispatch(updateShippingAddress(address));
         dispatch(updateContactInfo(name));
+        dispatch(updateUserProfile(address))
         console.log("address", address);
         onContinue();
     };
