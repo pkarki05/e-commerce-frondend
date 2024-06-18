@@ -49,8 +49,10 @@ function App() {
         <Route path='terms-and-conditions' element={<TermsAndConditions/>}/>
        <Route path='refund-policy' element={<RefundPolicy/>}/>
        <Route path='shipping-policy' element={<ShippingPolicy/>}/>
+
       </Route>
       <Route path='checkout-success' element={<CheckOutSuccess/>}/>
+
     </Routes>
     </BrowserRouter>
     <ToastContainer/>

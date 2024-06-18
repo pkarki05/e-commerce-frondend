@@ -24,8 +24,8 @@ const ShippingSummary = ({fName,lName, email,phone,street, city, state, postalCo
 
         </div>
 
-        <div className='col-7 '>
-    <h6>Delivering to </h6>
+        <div className='col-8 '>
+    <h5>Delivering to </h5>
     <div className=''>
     <p className='mb-0'>{street} {city}</p> 
     <p className='mb-0'>{state} {postalCode} {country}</p>
@@ -34,8 +34,8 @@ const ShippingSummary = ({fName,lName, email,phone,street, city, state, postalCo
 
 
         </div>
-        <div className="col-5">
-        <button onClick={handleEdit}>
+        <div className="col-4">
+        <button onClick={handleEdit} className='border-0 fs-5 ' >
             Edit <FaRegEdit />
             </button>
 

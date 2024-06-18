@@ -60,13 +60,14 @@ const CheckoutForm = ({ amount }) => {
     } else if (paymentIntent.status === 'succeeded') {
        
       setPaymentStatus('Payment successful!');
-      dispatch(updateUserProfile({shoppingItems:cartItems}, user))
       cardNumberElement.clear();
       cardExpiryElement.clear();
       cardCvcElement.clear();
       dispatch(clearCart());
       navigate('/checkout-success');
       handleOrderPlacement(paymentIntent, cartItems, user);
+      dispatch(updateUserProfile({shoppingItems:cartItems}, user))
+
     }
   };
 
@@ -112,7 +113,7 @@ const CheckoutForm = ({ amount }) => {
         <button type="button" className="payment-method">Cash App Pay</button>
         <button type="button" className="payment-method">Afterpay</button>
       </div>
-      <div className="card-element">
+      <div className="d-flex card-element">
         <label>
           Card Number
           <CardNumberElement options={cardStyle} />

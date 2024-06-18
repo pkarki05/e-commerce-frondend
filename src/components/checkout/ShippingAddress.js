@@ -92,7 +92,7 @@ const ShippingAddress = ({ onContinue, initialData, initialContactInfo }) => {
                 </div>
                 <div className="w-100 m-3">
                     <div className="d-flex justify-content-between">
-                        <Link to='/cart' className='text-dark'>&#60; Return to Cart</Link>
+                        <Link to='/cart' className='text-dark link'>&#60; Return to Cart</Link>
                         <button type="submit" className='button'>Continue to payment</button>
                     </div>
                 </div>

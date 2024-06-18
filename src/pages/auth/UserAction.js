@@ -65,22 +65,27 @@ export const userLogOut=()=>async(dispatch)=>{
     
   }
 }
+
+
 export const updateUserProfile = (updatedData) => async (dispatch, getState) => {
   try {
-      const userId = getState().user.user.uid; // Assuming user ID is stored in user state
-      const userRef = doc(db, 'Customers', userId);
+    const user = getState().user.user; // Ensure you access the correct path to get the user object
+    const userId = user.uid; // Assuming user ID is stored in user state
 
-      // Ensure updatedData includes the necessary fields
-      const updatedProfile = {
-          ...updatedData,
-          avatar: updatedData.avatar || getState().user.user.avatar, // Maintain the existing avatar if not updated
-      };
+    const userRef = doc(db, 'Customers', userId);
 
-      await updateDoc(userRef, updatedProfile);
-      
-      dispatch(setUser(updatedProfile));
-      toast.success("Profile updated successfully");
+    // Ensure updatedData includes the necessary fields
+    const updatedProfile = {
+      ...updatedData,
+      avatar: updatedData.avatar || user.avatar, // Use user.avatar from state if not updated
+    };
+
+    await updateDoc(userRef, updatedProfile);
+
+    dispatch(setUser(updatedProfile)); // Update user state with updated profile
+    toast.success("Profile updated successfully");
   } catch (error) {
-      toast.error(`Error updating profile: ${error.message}`);
+    console.error("Error updating profile:", error);
+    toast.error(`Error updating profile: ${error.message}`);
   }
 };
