@@ -98,7 +98,7 @@ const Cart = () => {
                   ))}
                   <div className="col-12 py-2 mt-4">
                     <div className="d-flex justify-content-between align-items-baseline">
-                      <Link className='button' to='/store'>Continue to Shopping</Link>
+                      <Link className='button link' to='/store'>Continue to Shopping</Link>
                     </div>
                     <div className='d-flex align-items-end flex-column'>
                       <h4>Subtotal: ${calculateTotal()}</h4>
@@ -110,7 +110,7 @@ const Cart = () => {
               ) : (
                 <div className='p-2 m-2 '>
                   <h4 className=''>Cart is Empty</h4>
-                  <Link className='button' to='/store'>Continue to Shopping</Link>
+                  <Link className='button link' to='/store'>Continue to Shopping</Link>
                 </div>
               )}
             </div>

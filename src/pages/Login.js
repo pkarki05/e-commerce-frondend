@@ -60,10 +60,10 @@ const Login = () => {
                        
                        
                         <div className='mt-1'>
-                            <Link to='/forgot-password'  >Forgot Password?</Link>
+                            <Link to='/forgot-password link'  >Forgot Password?</Link>
                             <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
                                 <button className='button border-0' type='submit'>Login</button>
-                                <Link className='button signup ' to='/signup'>SignUp</Link>
+                                <Link className='button signup link' to='/signup'>SignUp</Link>
                             </div>
                         </div>
                     </Form>

@@ -60,7 +60,7 @@ const CheckoutForm = ({ amount }) => {
     } else if (paymentIntent.status === 'succeeded') {
        
       setPaymentStatus('Payment successful!');
-      dispatch(updateUserProfile(cartItems, user))
+      dispatch(updateUserProfile({shoppingItems:cartItems}, user))
       cardNumberElement.clear();
       cardExpiryElement.clear();
       cardCvcElement.clear();

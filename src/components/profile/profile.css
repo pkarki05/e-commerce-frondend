@@ -1,4 +1,12 @@
 /* UserProfile.css */
+/* logout button */
+.logout-btn{
+    cursor: pointer;
+}
+.logout-btn:hover {
+    transform: rotate(0.5turn) scale(1.3);
+}
+
 
 .profile-container {
     display: flex;
@@ -6,7 +14,7 @@
 }
 
 .sidebar {
-    width: 280px;
+    width: 260px;
     background:#fff;;
     padding: 20px;
     border-right: 1px solid #ddd;
@@ -17,16 +25,24 @@
     padding: 0;
 }
 
-.sidebar li {
-    font-size: 20px;
+.sidebar ul li {
+    display: flex; /* Flexbox for horizontal alignment */
+    align-items: center; /* Align items vertically */
+    font-size: 16px;
     font-weight: 400;
     border-bottom: 1px green solid;
     padding: 15px;
     cursor: pointer;
+    position: relative;
 }
 
+.sidebar ul li svg {
+    margin-right: 10px; /* Margin between icon and text */
+}
+
+
 .sidebar li:hover {
-    background: #ddd;
+    background-color: #e0e0e0; /* Background color on hover */
 }
 
 .profile-content {
@@ -38,6 +54,9 @@
     font-weight: 400;
     text-decoration: underline
     ;
+}
+.sidebar ul li.active {
+    font-weight: bold; /* Bold font for active item */
 }
 
 

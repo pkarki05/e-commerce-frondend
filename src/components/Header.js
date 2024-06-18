@@ -38,9 +38,7 @@ useEffect(()=>{
 
 
  
-const handleLogOut=async()=>{
-   dispatch(userLogOut())
-}
+
 
 const handleSeachChange=(e)=>{
   setSearchInput(e.target.value)
@@ -72,7 +70,7 @@ const handleSearchSelect=(product)=>{
     <div className="row align-items-center">
       <div className="col-2">
         <h2>
-          <Link className='d-flex align-items-center gap-10 text-white' to='/'>Electro.</Link>
+          <Link className='d-flex align-items-center gap-10 text-white link ' to='/' >Electro.</Link>
         </h2>
         </div>
         <div className="col-5 position-relative">
@@ -107,20 +105,33 @@ const handleSearchSelect=(product)=>{
 )}
         </div>
 <div className="col-5">
-<div className="header-uopeer-links d-flex align-item-center justify-content-end gap-30">
+<div className="header-uopeer-links d-flex align-item-center justify-content-end ">
 <div className='d-flex login-container'>
  <div className='d-flex flex-column'>
         {/* Other nav items */}
-        <img src={useImage} alt="" width="30px"/>
+        
         {user && user.email ? (
-          <Link onClick={handleLogOut} className='text-light font-small'>Log out</Link>
+          <div className='d-flex  row'>
+            <div className="col">
+            <img src={user.avatar} alt="" className='rounded-circle' width='30px'/>
+            </div>
+            <Link to='/profile' className='text-light font-small link '>{user.fname}</Link>
+
+          </div>
         ) : (
-          <Link to="/login" className='text-light font-small'>Log in</Link>
+          <div className='d-flex row'>
+            <div className="col">
+            <img src={useImage} alt="" width="30px"/>
+            </div>
+         <Link to="/login" className='text-light font-small '>Log in</Link>
+
+          </div>
+
         )}
       </div>
 </div>
 <div>
-<Link to='/cart' className="d-flex align-items-center gap-10 text-white cart-link">
+<Link to='/cart' className="d-flex align-items-center gap-10 text-white cart-lin link">
 <div className="d-flex flex-column gap-10 position-relative">
   {cartItems.length>0 && (
     <span className="badge bg-danger text-light rounded-circle qty-count position-absolute" >{cartItems.length}</span>
@@ -143,7 +154,7 @@ const handleSearchSelect=(product)=>{
 <div className="container-xxl">
   <div className="row">
     <div className="col-12">
-      <div className="menu-bottom d-flex align-items-center gap-30">
+      <div className="menu-bottom d-flex align-items-center gap-5">
         <div>
         <div className="dropdown">
   <button className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-15 align-items-center d-flex"
@@ -156,7 +167,7 @@ const handleSearchSelect=(product)=>{
   <ul className="dropdown-menu text-white" aria-labelledby="dropdownMenuButton1">
   {categories.map((cat)=>(
     
-      <Link to={`/category/${cat.slug}`} className=" text-white d-flex category-items" > <li className=' '>{cat.name}
+      <Link to={`/category/${cat.slug}`} className=" text-white d-flex category-items link" > <li className=' '>{cat.name}
       </li> </Link>
 
 
@@ -165,9 +176,9 @@ const handleSearchSelect=(product)=>{
   </ul>
 </div>
         </div>
-        <div className="menu-links">
-          <div className='d-flex align-items-center gap-15'>
-            <NavLink className='nav-link text-white ' to=''>Home</NavLink>
+        <div className="menu-links ">
+          <div className='d-flex align-items-center gap-4'>
+            <NavLink className='nav-link text-white   ' to=''>Home</NavLink>
             <NavLink className='nav-link text-white' to='/store'>Our Store</NavLink>
             <NavLink className='nav-link text-white' to='/contact'>Contacs</NavLink>
           </div>

@@ -31,6 +31,7 @@ a{
 .font-small{
   font-size: 12px;
   font-weight: 400;
+  text-decoration: none;
 }
 
 /* header part start */
@@ -43,10 +44,22 @@ a{
 .gap-30{
   gap: 30px;
 }
+.link{
+  text-decoration: none;
+}
 .form-control:focus{
   box-shadow: none;
   border-color: inherit;
 
+}
+.login-img{
+  align-items: center;
+  
+}
+.login-img img{
+  height: 25px;
+  width: auto;
+  border-radius: 50%;
 }
 .header-top-strip{
   border-bottom: 1px solid var(--color-top-banner2);
@@ -86,7 +99,8 @@ a{
 {
   color: white;
   font-size: 14px;
-  line-height: 18px;
+  line-height: 26px;
+  padding: 2px;
   font-weight: 400;
   letter-spacing: 0.3;
   text-transform: uppercase;

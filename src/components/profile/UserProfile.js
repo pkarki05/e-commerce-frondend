@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './profile.css';
-import { updateUserProfile } from '../../pages/auth/UserAction';
+import { updateUserProfile, userLogOut } from '../../pages/auth/UserAction';
 import avatar from '../../images/profile-avatar.png'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import Sidebar from './Sidebar';
@@ -9,6 +9,10 @@ import { FaRegEdit } from "react-icons/fa";
 import { storage } from '../../firrebase/firebaseConfig';
 import MetaHelmentComp from '../MetaHelmentComp';
 import BreadCrum from '../BreadCrum';
+import { RiShutDownLine } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 
@@ -20,13 +24,21 @@ const UserProfile = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [section, setSection] = useState('profileDetails');
     const [isEditingAddress, setIsEditingAddress] = useState(false);
+    const[shoping, setShopping]=useState([])
+    const navigate=useNavigate()
 
 
+const handleLogOut=async()=>{
+   dispatch(userLogOut())
+   navigate('/')
+
+}
 
 
     useEffect(() => {
         if (user) {
             setProfile(user);
+            setShopping(user.shoppingItems)
         }
     }, [user]);
 
@@ -147,7 +159,7 @@ const UserProfile = () => {
                         ) : (
                             <div className='profile-content'>
                              <h3>Profile Details</h3>
-                                <div className='d-flex row '>
+                                <div className='d-flex row border rounded '>
                                     <div className="col-9">
                                     <p><strong>Username:</strong> {profile.email}</p>
                                 <p><strong>Phone:</strong> {profile.phone}</p>
@@ -264,8 +276,8 @@ const UserProfile = () => {
             case 'shoppingHistory':
                 return (
                     <div className="shopping-history">
-                        <h2>Shopping History</h2>
-                        <table class="table">
+                        <h3>Shopping History</h3>
+                        <table class="table border table-striped table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -277,13 +289,13 @@ const UserProfile = () => {
     </tr>
   </thead>
   <tbody>
-    {user.map((product,index)=>(
+    {shoping.map((product,index)=>(
         <tr>
         <th scope="row">{index+1}</th>
         <td>{product.title}</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+        <td>${product.price}</td>
+        <td>{product.cartQuantity}</td>
+        <td>${(product.price)*(product.cartQuantity)}</td>
       </tr>
 
     ))}
@@ -300,8 +312,8 @@ const UserProfile = () => {
 
     return (
         <>
-         <MetaHelmentComp title= 'User Profile' />
-         <BreadCrum title= 'User Profile'/>
+         <MetaHelmentComp title= 'Profile' />
+         <BreadCrum title= 'Profile'/>
         <div className="profile-container w-75">
        
             
@@ -311,6 +323,13 @@ const UserProfile = () => {
                 <img src={profile.avatar || avatar} alt="User Avatar" className="profile-avatar" />
                 <h1 className="profile-name">{profile.fname} {profile.lname}</h1>
                 <p className="profile-email">{profile.email}</p>
+                <div className="row ">
+                    <div className="pe-auto align-items-center justify-content-center">
+                    <RiShutDownLine className='text-light rounded-circle fs-3 bg-danger pointer pe-auto logout-btn' onClick={handleLogOut}/>
+                    <p className='fs-6 text-danger text-bold'>Log Out</p>
+                    </div>
+                </div>
+
             </div>
             {renderSection()}
         </div>

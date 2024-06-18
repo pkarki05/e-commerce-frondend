@@ -62,8 +62,8 @@ const SingleProductDetails = ({title,price, category,tags, availability, size, c
                                     <input type="number" style={{width:'60px'}} min={1} max={10} className='form-control' />
                                 </div>
                                 <div className='d-flex align-items-center gap-30'>
-                                <Link className='button border-0' type='submit' to='/cart'>ADD TO CART</Link>
-                                <Link className='button signup ' to='/signup'>Buy It Now</Link>
+                                <Link className='button border-0 link' type='submit' to='/cart'>ADD TO CART</Link>
+                                <Link className='button signup link' to='/signup'>Buy It Now</Link>
                                 </div>
 
 

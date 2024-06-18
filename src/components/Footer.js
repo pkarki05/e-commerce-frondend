@@ -44,8 +44,8 @@ const Footer = () => {
             <div className="col-4">
               <h4 className='text-white mb-4'> Contact US</h4>
               <address className='text-white fs-6'>84 Kings Canyon Street,  <br /> Harrison (2914) , <br />ACT, Australia </address>
-              <a href="tel:0415690123" className='mt-2 d-block mb-2 text-white'>61 415690123</a>
-              <a href="mailto:karkiprakash049@gmail.com" className='mt-2 d-block mb-2 text-white'>karkiprakash049@gmail.com</a>
+              <a href="tel:0415690123" className='mt-2 d-block mb-2 text-white link'>61 415690123</a>
+              <a href="mailto:karkiprakash049@gmail.com" className='mt-2 d-block mb-2 text-white link'>karkiprakash049@gmail.com</a>
               <div className="social-icons d-flex align-items-center gap-15 mt-3">
                 <a href=""  className='text-white'>
                 <FaFacebook  className='fs-4'/>
@@ -72,12 +72,12 @@ const Footer = () => {
             <h4 className='text-white mb-4'>Information</h4>
 
             <div className='footer-links d-flex flex-column'>
-                  <Link className='text-white py-2 mb-1'>Privacy Policy</Link>
-                  <Link className='text-white py-2 mb-1' to='/refund-policy'>Refund Policy</Link>
-                  <Link className='text-white py-2 mb-1' to='shipping-policy'>Shipping Policy</Link>
-                  <Link className='text-white py-2 mb-1' to='/terms-and-conditions'>Terms & Conditions</Link>
+                  <Link className='text-white py-2 mb-1 link'>Privacy Policy</Link>
+                  <Link className='text-white py-2 mb-1 link' to='/refund-policy'>Refund Policy</Link>
+                  <Link className='text-white py-2 mb-1 link' to='shipping-policy'>Shipping Policy</Link>
+                  <Link className='text-white py-2 mb-1 link' to='/terms-and-conditions'>Terms & Conditions</Link>
 
-                  <Link className='text-white py-2 mb-1'>Blogs</Link>
+                  <Link className='text-white py-2 mb-1 link'>Blogs</Link>
                 </div>
 
 
@@ -86,9 +86,9 @@ const Footer = () => {
             <h4 className='text-white mb-4'>Account</h4>
 
             <div className='footer-links d-flex flex-column'>
-                  <Link className='text-white py-2 mb-1'>About Us</Link>
-                  <Link className='text-white py-2 mb-1'>FAQ</Link>
-                  <Link className='text-white py-2 mb-1'>Contact</Link>
+                  <Link className='text-white py-2 mb-1 link'>About Us</Link>
+                  <Link className='text-white py-2 mb-1 link'>FAQ</Link>
+                  <Link className='text-white py-2 mb-1 link'>Contact</Link>
                 </div>
 
 
@@ -97,10 +97,10 @@ const Footer = () => {
             <h4 className='text-white mb-4 '>Quick Links</h4>
 
                 <div className='footer-links d-flex flex-column'>
-                  <Link className='text-white py-2 mb-1'>Laptops</Link>
-                  <Link className='text-white py-2 mb-1'>HeadPhone</Link>
-                  <Link className='text-white py-2 mb-1'>Tablet</Link>
-                  <Link className='text-white py-2 mb-1'>Watch</Link>
+                  <Link className='text-white py-2 mb-1 link'>Laptops</Link>
+                  <Link className='text-white py-2 mb-1 link'>HeadPhone</Link>
+                  <Link className='text-white py-2 mb-1 link'>Tablet</Link>
+                  <Link className='text-white py-2 mb-1 link'>Watch</Link>
                 </div>
 
             </div>
