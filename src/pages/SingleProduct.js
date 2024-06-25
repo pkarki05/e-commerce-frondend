@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductInfo, fetchProductAction,updateProduct } from '../redux/Product/ProductAction';
 import { addToCart } from '../redux/Cart/CartSlice';
 import CustomCarousal from '../components/CustomCarousal';
+import { getUserReview, submitReview } from '../redux/reviews/reviewAction';
+import { toast } from 'react-toastify';
 
 const SingleProduct = () => {
     const [orderedProduct, setOrderedProduct] = useState(true);
@@ -22,6 +24,12 @@ const SingleProduct = () => {
 
     const { productList } = useSelector(state => state.product);
     const user = useSelector(state => state.user.user);
+    const {reviews}=useSelector(state=>state.review)
+    console.log("reviews",reviews)
+
+    useEffect(()=>{
+        dispatch(getUserReview(slug))
+    },[dispatch,slug])
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
@@ -61,32 +69,54 @@ const SingleProduct = () => {
         navigate('/cart');
     };
 
-    const handleReviewChange = (event) => {
+    const handleRatingChange = (newRating) => {
+        setNewReview(prevState => ({ ...prevState, rating: newRating }));
+    };
+
+    const handleCommentChange = (event) => {
         const { name, value } = event.target;
         setNewReview(prevState => ({ ...prevState, [name]: value }));
     };
 
     const handleReviewSubmit = async (event) => {
         event.preventDefault();
-        if (isLoggedIn) {
+    
+        if (newReview.rating === 0 || newReview.comment.trim() === '') {
+            alert('Please provide rating and comment.');
+            return;
+        }
+    
+        if (user && Object.keys(user).length > 0)  {
             const review = {
                 ...newReview,
+                userId: user.uid, // Assuming your user object has a userId field
                 firstName: user.fname || 'Anonymous'
             };
-
-            const updatedReviews = form.reviews ? [...form.reviews, review] : [review];
-
-            const updatedData = {
-                ...form,
-                reviews: updatedReviews
-            };
-
-            // Update the product in Firestore and Redux store
-            await dispatch(updateProduct(slug, updatedData));
-
-            setNewReview({ rating: 0, comment: '' });
+    
+            try {
+                // Dispatch action to submit review
+                await dispatch(submitReview(slug, review, form?.title, user.fname));
+    
+                // Reset review form
+                setNewReview({ rating: 0, comment: '' });
+            } catch (error) {
+                console.error('Failed to submit review:', error);
+                toast.error('Failed to submit review. Please try again.');
+            }
+        } else {
+            alert('Please log in to submit a review.');
         }
-    }
+    };
+    const calculateAverageRating = (reviews) => {
+        if (reviews.length === 0) return 0;
+        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+        return totalRating / reviews.length;
+    };
+
+    const averageRating = calculateAverageRating(reviews[slug] || []);
+    const numberOfReviews = reviews[slug]?.length || 0;
+
+    
     return (
         <>
             <MetaHelmentComp title={form?.title || 'Product Name'} />
@@ -179,10 +209,10 @@ const SingleProduct = () => {
                                                     count={5}
                                                     size={16}
                                                     edit={false}
-                                                    value={form?.rating || 3}
+                                                    value={averageRating}
                                                     activeColor="#ffd700"
                                                 />
-                                                <p className="mb-0 t-review">Based on {form?.reviews ? form.reviews.length : 0} Reviews</p>
+                                                <p className="mb-0 t-review">Based on {numberOfReviews} Reviews</p>
                                             </div>
                                         </div>
                                         {orderedProduct && (
@@ -201,7 +231,7 @@ const SingleProduct = () => {
                                                     edit={true}
                                                     value={newReview.rating}
                                                     activeColor="#ffd700"
-                                                    onChange={newRating => setNewReview(prevState => ({ ...prevState, rating: newRating }))}
+                                                    onChange={handleRatingChange}
                                                 />
                                             </div>
                                             <div>
@@ -212,18 +242,19 @@ const SingleProduct = () => {
                                                     cols="5" rows="8"
                                                     disabled={!isLoggedIn}
                                                     value={newReview.comment}
-                                                    onChange={handleReviewChange}
+                                                    onChange={handleCommentChange}
                                                 />
                                             </div>
                                             <div className="d-flex justify-content-end">
                                                 <button className="button border-0" disabled={!isLoggedIn}>Submit review</button>
                                             </div>
                                         </form>
-                                        <div className="reviews mt-4">
-                                            {form?.reviews?.map((review, index) => (
+                                        {reviews[slug] && reviews[slug].length >0 &&(
+                                            <div className="reviews mt-4">
+                                            {reviews[slug].map((review, index) => (
                                                 <div className="review" key={index}>
                                                     <div className="d-flex gap-10 align-items-center">
-                                                        <h6 className="mb-0">{review.firstName}</h6>
+                                                        <h6 className="mb-0">{review.user}</h6>
                                                         <ReactStars
                                                             count={5}
                                                             size={16}
@@ -236,6 +267,9 @@ const SingleProduct = () => {
                                                 </div>
                                             ))}
                                         </div>
+
+                                        )}
+                                        
                                     </div>
                                 </div>
                             </div>

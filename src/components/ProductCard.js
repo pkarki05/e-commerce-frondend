@@ -22,6 +22,15 @@ const ProductCard = (props) => {
     const [form, setForm] = useState({});
     const [isLiked, setIsLiked] = useState(false);
     const { productList } = useSelector(state => state.product);
+    const {reviews}=useSelector(state=>state.review)
+    const calculateAverageRating = (reviews) => {
+        if (reviews.length === 0) return 0;
+        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+        return totalRating / reviews.length;
+    };
+
+    const averageRating = calculateAverageRating(reviews[slug] || []);
+
     
 
     const dispatch=useDispatch()
@@ -74,7 +83,7 @@ const ProductCard = (props) => {
                     count={5}
                     size={16}
                     edit={true}
-                    value={3}
+                    value={averageRating}
                     activeColor="#ffd700"
                 />
 

@@ -7,13 +7,16 @@ import cartReducer from "./redux/Cart/CartSlice";
 import checkoutReducer from "./redux/checkout/CheckOutSlice";
 import userReducer from "./pages/auth/UserSlice";
 import orderReducer from "./redux/customer-orders/customerOrderSlice";
+import reviewReducer from './redux/reviews/ReviewSlice'
+
     const reducers=combineReducers({
         product:productReducer,
         category:categoryReducer,
         cart:cartReducer,
         checkout:checkoutReducer,
         user:userReducer,
-        order:orderReducer
+        order:orderReducer,
+        review:reviewReducer
 
     }) 
     const persistConfig={
